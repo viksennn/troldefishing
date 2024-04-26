@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 export const connectMongo = async () => {
   try {
-    await mongoose.connect('mongodb+srv://viksennonbo:bWT2GG7HMHanaNWA@cluster0.fuifzfg.mongodb.net/TFDatabase');
+    await mongoose.connect(process.env.MONGODB_URI as string);
     console.log('MongoDB connected baby');
   } catch (error) {
     console.error('MongoDB connection error', error);
