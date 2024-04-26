@@ -4,8 +4,9 @@ import { IFisher } from "@/types/IFisher";
 
 export default async function Home() {
 
-  const getFiskeData = async ():Promise<IFisher[]>  => {
-    const res = await fetch('http://localhost:3000/api/fisk', {cache: "no-store"});
+  const getFiskeData = async (): Promise<IFisher[]> => {
+    const url = `https://troldefishing.vercel.app/api/fisk`
+    const res = await fetch(url, { cache: "no-store" });
     const data = await res.json();
     return data;
   }
