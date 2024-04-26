@@ -1,23 +1,25 @@
 import { ProfileCard } from "@/app/components/ProfileCard";
 import { DashboardHeader } from "@/app/components/dashboardComp/DashboardHeader";
+import { IFisher } from "@/types/IFisher";
 
-export default function Home() {
+export default async function Home() {
 
-  const demoData = [
-    {navn: "Viktor", antalFisk: 0},
-    {navn: "Peder", antalFisk: 1}
-  ]
+  const getFiskeData = async ():Promise<IFisher[]>  => {
+    const res = await fetch('http://localhost:3000/api/fisk');
+    const data = await res.json();
+    return data;
+  }
+
+  const fiskeData = await getFiskeData();
 
   return (
     <div>
-        <div>
-          <p>Profile</p>
-        </div>
-        <div className="p-5">
-          {demoData.map((data) => {
-            return <ProfileCard key={data.navn} data={data} />
-          })}
-        </div>
+      <div>
+        <p>Profile</p>
+      </div>
+      <div className="p-5">
+        {fiskeData.map((data:IFisher) => <ProfileCard key={data.navn} data={data} />)}
+      </div>
     </div>
   );
 }
