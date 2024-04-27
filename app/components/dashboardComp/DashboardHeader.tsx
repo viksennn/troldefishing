@@ -7,7 +7,7 @@ export const DashboardHeader = () => {
     const iconSize = 35;
 
     const links = [
-        { name: "Profil", path: "/profil", icon: <GiLuckyFisherman size={iconSize} /> },
+        { name: "Profil", path: "/fiskerne", icon: <GiLuckyFisherman size={iconSize} /> },
     ]
 
     return (

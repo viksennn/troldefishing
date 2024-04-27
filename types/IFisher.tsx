@@ -1,11 +1,12 @@
 export interface IFisher {
-    _id: Object,
+    _id: String,
     navn: string,
     fiskeData: [
         {
             art: string,
             lokation: string,
-            dato: string
+            dato: string,
+            fishId: string
         }
     ]
 }

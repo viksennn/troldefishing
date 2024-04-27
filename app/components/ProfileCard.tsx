@@ -3,12 +3,17 @@ import { FC } from "react";
 
 export const ProfileCard = ({data}:any) => {
 
+    const antalFisk = data.fiskeData.length;
+
+    const profileUrl = `fiskerne/${data._id}`;
+
     return (
         <div className="flex flex-col p-4 m-4 rounded border gap-3 w-[350px]">
             <div>
-                <p className="font-bold">{data.navn} -</p>
+                <p className="font-bold">{data.navn}</p>
+                <p>Antal fisk fanget: {antalFisk}</p>
             </div>
-            <Link className="text-gray-600 text-sm" href="/">Se mere</Link>
+            <Link className="text-gray-600 text-sm" href={profileUrl}>Se mere</Link>
         </div>
     )
 }
