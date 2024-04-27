@@ -4,9 +4,6 @@ import { DashboardHeader } from "../components/dashboardComp/DashboardHeader";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Dashboard",
-};
 
 export default function RootLayout({
   children,

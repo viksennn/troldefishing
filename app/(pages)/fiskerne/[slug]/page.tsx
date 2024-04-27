@@ -1,5 +1,7 @@
 import { FiskCard } from "@/app/components/FiskCard";
 import { IFisher } from "@/types/IFisher";
+import Link from "next/link";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
@@ -29,8 +31,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
         )
     } else {
         return (
-            <div>
-                <div className="flex flex-col m-5 gap-5">
+            <div className="m-6">
+                <Link href="/fiskerne">
+                    <IoMdArrowRoundBack size={35} className="text-white bg-black rounded-full p-1 mt-2 mb-10 transition-all hover:scale-[1.1]"/>
+                </Link>
+                <div className="flex flex-col gap-5">
                     <p className="text-2xl font-bold">{data.navn}</p>
                     <div className="">
                         {data.fiskeData.map((fisk) => {
