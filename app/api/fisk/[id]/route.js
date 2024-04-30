@@ -4,9 +4,8 @@ import { NextResponse } from "next/server";
 export async function GET(req, {params}) {
     const { id } = params;
     await connectMongo();
-    console.log(id);
     const fisk = await FishingModel.findOne({ _id: id });
-    return NextResponse.json({fisk});
+    return NextResponse.json({fisk}, {status: 200});
 }
 
 export async function PUT(req, {params}) {
