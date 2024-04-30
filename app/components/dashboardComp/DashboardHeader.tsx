@@ -1,6 +1,4 @@
 import Link from "next/link"
-import { GiLuckyFisherman } from "react-icons/gi";
-
 
 export const DashboardHeader = () => {
 

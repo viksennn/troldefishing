@@ -12,6 +12,7 @@ export const connectMongo = async () => {
 };
 
 const fishingStats = new mongoose.Schema({
+  _id: String,
   navn: String,
   fiskeData: [
     {

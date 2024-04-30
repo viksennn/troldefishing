@@ -8,6 +8,7 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
+import { toast } from "@/components/ui/use-toast";
 
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
@@ -17,6 +18,8 @@ export const FiskerOpretKnap = () => {
     const router = useRouter();
 
     const [FiskerNavn, setFiskerNavn] = useState("");
+
+    const [isOpen, setIsOpen] = useState<boolean>();
 
     const handleOpretFisker:FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
@@ -29,11 +32,15 @@ export const FiskerOpretKnap = () => {
             body: JSON.stringify(FiskerNavn)
         })
         router.refresh();
+        setIsOpen(false);
+        toast( {
+            title: `${FiskerNavn} er nu blevet en del af fiskerne! 🎣`
+        })
     }
 
     return (
         <div>
-            <Dialog>
+            <Dialog onOpenChange={setIsOpen} open={isOpen}>
                 <DialogTrigger className="py-2 px-3 rounded bg-black text-white ">Opret Fisker</DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
