@@ -1,5 +1,6 @@
 import { FiskCard } from "@/app/components/FiskCard";
 import { ProfileSetting } from "@/app/components/ProfileSetting";
+import { FiskeOpretKnap } from "@/app/components/ui/FiskOpretKnap";
 import { IFisher } from "@/types/IFisher";
 import Link from "next/link";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -43,9 +44,20 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     <div className="flex flex-col gap-5">
                         <p className="text-2xl font-bold">{data.navn}</p>
                         <div className="">
-                            {data.fiskeData.map((fisk) => {
-                                return <FiskCard key={fisk.fishId} data={fisk} />
-                            })}
+                            {data.fiskeData.length < 1 ? (
+                                <div>
+                                    <FiskeOpretKnap label="Opret din første fisk 😮" />
+                                </div>
+                            ) : (
+                                <div>
+                                    {data.fiskeData.map((fisk) => {
+                                        return <FiskCard key={fisk._id} data={fisk} />;
+                                    })}
+                                    <div className="mt-5">
+                                        <FiskeOpretKnap slug={params} label="Opret ny fisk 🐟" />
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

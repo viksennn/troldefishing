@@ -4,9 +4,10 @@ export interface IFisher {
     fiskeData: [
         {
             art: string,
+            agn: string,
             lokation: string,
             dato: string,
-            fishId: string
+            _id: string
         }
     ]
 }

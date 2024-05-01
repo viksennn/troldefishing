@@ -21,7 +21,7 @@ export default function Home() {
 
         </div>
         <div className="z-0">
-          <Image src={Logo} alt="Troldefishing" width={500} height={500} className="lg:block hidden"/>
+          <Image src={Logo} alt="Troldefishing" width={500} height={500} className="lg:block hidden" draggable={false}/>
         </div>
       </div>
     </div>

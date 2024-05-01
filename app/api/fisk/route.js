@@ -1,5 +1,6 @@
-import { connectMongo, FishingModel } from "@/app/data/mongodb";
+import { connectMongo } from "@/app/data/mongodb";
 import { NextResponse } from "next/server";
+import { FishingModel } from "@/app/data/mongoFishingModel";
 
 export async function GET() {
     await connectMongo();
