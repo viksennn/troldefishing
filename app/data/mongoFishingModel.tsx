@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const fishingStatsData = new mongoose.Schema({
-    Art: String,
-    Lokation: String,
-    Agn: String,
-    Dato: String,
+    art: String,
+    lokation: String,
+    agn: String,
+    dato: String,
 });
 
 const fishingStats = new mongoose.Schema({

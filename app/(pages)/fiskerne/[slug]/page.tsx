@@ -1,11 +1,16 @@
-import { FiskCard } from "@/app/components/FiskCard";
+import { FiskeDataComp } from "@/app/components/FiskeDataComp";
 import { ProfileSetting } from "@/app/components/ProfileSetting";
 import { FiskeOpretKnap } from "@/app/components/ui/FiskOpretKnap";
+import { toast } from "@/components/ui/use-toast";
 import { IFisher } from "@/types/IFisher";
 import Link from "next/link";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
 export default async function Page({ params }: { params: { slug: string } }) {
+
+    const handleEdit = () => {
+        // Implement logic to edit the fish card
+    };
 
     const getFishermanData = async (slug: string) => {
         const url = `${process.env.PAGE_URL}/api/fisk/${slug}`;
@@ -19,7 +24,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
         return data;
     }
 
-    const fishermanData = await getFishermanData(params.slug);
+    const id = params.slug;
+
+    const fishermanData = await getFishermanData(id);
 
     const data: IFisher = fishermanData.fisk;
 
@@ -37,12 +44,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         <Link href="/fiskerne">
                             <IoMdArrowRoundBack size={35} className="text-white bg-black rounded-full p-1 mt-2 mb-10 transition-all hover:scale-[1.1]"/>
                         </Link>
-                        <div>
+                        <div className="flex gap-8 items-center">
                             <ProfileSetting data={data} />
                         </div>
                     </div>
                     <div className="flex flex-col gap-5">
-                        <p className="text-2xl font-bold">{data.navn}</p>
+                        <p className="text-4xl font-bold">{data.navn}</p>
                         <div className="">
                             {data.fiskeData.length < 1 ? (
                                 <div>
@@ -50,11 +57,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
                                 </div>
                             ) : (
                                 <div>
-                                    {data.fiskeData.map((fisk) => {
-                                        return <FiskCard key={fisk._id} data={fisk} />;
-                                    })}
+                                    <FiskeDataComp data={data}/>
                                     <div className="mt-5">
-                                        <FiskeOpretKnap slug={params} label="Opret ny fisk 🐟" />
+                                        <FiskeOpretKnap slug={id} label="Opret ny fisk 🐟" />
                                     </div>
                                 </div>
                             )}

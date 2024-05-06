@@ -13,9 +13,7 @@ import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
 
-export const FiskeOpretKnap = ({label, slug}:any) => {
-
-    console.log(slug);
+export const FiskeOpretKnap = ({label, slug}: any) => {
 
     const router = useRouter();
 
@@ -27,6 +25,7 @@ export const FiskeOpretKnap = ({label, slug}:any) => {
     const [isOpen, setIsOpen] = useState<boolean>();
 
     const handleOpretFisk:FormEventHandler<HTMLFormElement> = async (e) => {
+
         e.preventDefault();
         
         await fetch(`http://localhost:3000/api/fisk/${slug}`, {
@@ -41,6 +40,11 @@ export const FiskeOpretKnap = ({label, slug}:any) => {
         toast( {
             title: `${FiskArt} er blevet tilføjet 🎣`
         })
+
+        setFiskArt("");
+        setFiskLokation("");
+        setFiskAgn("");
+        setFiskDato("");
     }
 
     return (
@@ -53,10 +57,10 @@ export const FiskeOpretKnap = ({label, slug}:any) => {
                     </DialogHeader>
                     <div className="flex justify-center mt-5">
                         <form className="flex flex-col gap-3 justify-start w-3/4" onSubmit={handleOpretFisk}>
-                            <input className="p-2 border-2 rounded" type="text" placeholder="Art" onChange={(e) => setFiskArt(e.target.value)} />
-                            <input className="p-2 border-2 rounded" type="text" placeholder="Lokation" onChange={(e) => setFiskLokation(e.target.value)} />
-                            <input className="p-2 border-2 rounded" type="text" placeholder="Agn" onChange={(e) => setFiskAgn(e.target.value)} />
-                            <input className="p-2 border-2 rounded" type="date" placeholder="Dato" onChange={(e) => setFiskDato(e.target.value)} />
+                            <input required className="p-2 border-2 rounded" type="text" placeholder="Art" onChange={(e) => setFiskArt(e.target.value)} />
+                            <input required className="p-2 border-2 rounded" type="text" placeholder="Lokation" onChange={(e) => setFiskLokation(e.target.value)} />
+                            <input required className="p-2 border-2 rounded" type="text" placeholder="Agn" onChange={(e) => setFiskAgn(e.target.value)} />
+                            <input required className="p-2 border-2 rounded" type="date" placeholder="Dato" onChange={(e) => setFiskDato(e.target.value)} />
                             <button className="bg-black text-white py-2 px-3 rounded" type="submit">Opret</button>
                         </form>
                     </div>
