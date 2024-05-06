@@ -1,16 +1,13 @@
 import { FiskeDataComp } from "@/app/components/FiskeDataComp";
 import { ProfileSetting } from "@/app/components/ProfileSetting";
 import { FiskeOpretKnap } from "@/app/components/ui/FiskOpretKnap";
+import { FishingModel } from "@/app/data/mongoFishingModel";
 import { toast } from "@/components/ui/use-toast";
 import { IFisher } from "@/types/IFisher";
 import Link from "next/link";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
 export default async function Page({ params }: { params: { slug: string } }) {
-
-    const handleEdit = () => {
-        // Implement logic to edit the fish card
-    };
 
     const getFishermanData = async (slug: string) => {
         const url = `${process.env.PAGE_URL}/api/fisk/${slug}`;
@@ -53,7 +50,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         <div className="">
                             {data.fiskeData.length < 1 ? (
                                 <div>
-                                    <FiskeOpretKnap label="Opret din første fisk 😮" />
+                                    <FiskeOpretKnap slug={id} label="Opret din første fisk 😮" />
                                 </div>
                             ) : (
                                 <div>

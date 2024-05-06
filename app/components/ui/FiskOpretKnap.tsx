@@ -3,7 +3,6 @@
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -12,6 +11,7 @@ import { toast } from "@/components/ui/use-toast";
 
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
+import uniqid from "uniqid";
 
 export const FiskeOpretKnap = ({label, slug}: any) => {
 
