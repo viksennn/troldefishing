@@ -5,6 +5,7 @@ import { getFiskeData } from "../data/dataFetch";
 import { ProfileCard } from "./ProfileCard";
 
 export const ProfileCardList = async () => {
+    
     const fiskeData = await getFiskeData();
 
     return (
