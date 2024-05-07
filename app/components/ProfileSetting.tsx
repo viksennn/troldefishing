@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5"
+import { PAGE_URL } from "../url";
 
 export const ProfileSetting = ({data}:any) => {
 
@@ -22,7 +23,7 @@ export const ProfileSetting = ({data}:any) => {
         const confirm = window.confirm(`Er du sikker på at du vil slette ${data.navn}?`);
 
         if (confirm) {
-            await fetch(`http://localhost:3000/api/fisk?id=${id}`, {
+            await fetch(`${PAGE_URL}/api/fisk?id=${id}`, {
                 method: "DELETE",
             })
 

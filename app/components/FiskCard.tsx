@@ -5,6 +5,7 @@ import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { FaTrash } from "react-icons/fa";
 import { TbFishBone } from "react-icons/tb";
+import { PAGE_URL } from "../url";
 
 export const FiskCard = ({ data, user }:any) => {
 
@@ -13,7 +14,7 @@ export const FiskCard = ({ data, user }:any) => {
     const router = useRouter();
 
     const handleDeleteClick = async () => {
-        const url = `http://localhost:3000/api/fisk/${user}`;
+        const url = `${PAGE_URL}/api/fisk/${user}`;
         await fetch(url, {
             method: "DELETE",
             headers: {

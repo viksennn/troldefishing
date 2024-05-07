@@ -1,5 +1,6 @@
 "use client"
 
+import { PAGE_URL } from "@/app/url";
 import {
     Dialog,
     DialogContent,
@@ -23,8 +24,10 @@ export const FiskerOpretKnap = () => {
 
     const handleOpretFisker:FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
-        
-        await fetch(`http://localhost:3000/api/fisk`, {
+
+        const url = `${PAGE_URL}/api/fisk`;
+
+        await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

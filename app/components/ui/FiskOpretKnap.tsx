@@ -1,5 +1,6 @@
 "use client"
 
+import { PAGE_URL } from "@/app/url";
 import {
     Dialog,
     DialogContent,
@@ -28,7 +29,7 @@ export const FiskeOpretKnap = ({label, slug}: any) => {
 
         e.preventDefault();
 
-        const url = `http://localhost:3000/api/fisk/${slug}`;
+        const url = `${PAGE_URL}/api/fisk/${slug}`;
         
         await fetch(url, {
             method: "POST",

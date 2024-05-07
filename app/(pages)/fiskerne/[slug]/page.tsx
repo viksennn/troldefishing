@@ -2,6 +2,7 @@ import { FiskeDataComp } from "@/app/components/FiskeDataComp";
 import { ProfileSetting } from "@/app/components/ProfileSetting";
 import { FiskeOpretKnap } from "@/app/components/ui/FiskOpretKnap";
 import { FishingModel } from "@/app/data/mongoFishingModel";
+import { PAGE_URL } from "@/app/url";
 import { toast } from "@/components/ui/use-toast";
 import { IFisher } from "@/types/IFisher";
 import Link from "next/link";
@@ -10,7 +11,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 export default async function Page({ params }: { params: { slug: string } }) {
 
     const getFishermanData = async (slug: string) => {
-        const url = `${process.env.PAGE_URL}/api/fisk/${slug}`;
+        const url = `${PAGE_URL}/api/fisk/${slug}`;
         const res = await fetch(url, { cache: "no-store" });
 
         if (!res.ok) {
