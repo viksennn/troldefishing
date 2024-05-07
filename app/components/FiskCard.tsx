@@ -30,7 +30,7 @@ export const FiskCard = ({ data, user }:any) => {
     };
 
     return (
-        <div className="p-3 border rounded w-[400px] mt-2 flex justify-between">
+        <div className="p-3 border rounded w-[400px] mt-3 flex justify-between">
             <div className="">
                 <p><span className="text-gray-500">Type: </span>{data.art}</p>
                 <p><span className="text-gray-500">Lokation: </span>{data.lokation}</p>
