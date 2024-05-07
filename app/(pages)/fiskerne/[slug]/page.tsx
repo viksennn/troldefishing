@@ -11,6 +11,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 export default async function Page({ params }: { params: { slug: string } }) {
 
     const getFishermanData = async (slug: string) => {
+        
         const url = `${PAGE_URL}/api/fisk/${slug}`;
         const res = await fetch(url, { cache: "no-store" });
 
