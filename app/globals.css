@@ -3,6 +3,9 @@
   @tailwind utilities;
 
   @layer base {
+    .bg-dashboard {
+      background-image: url('/public/background.jpg');
+    }
     :root {
       --background: 0 0% 100%;
       --foreground: 222.2 84% 4.9%;

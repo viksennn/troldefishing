@@ -8,7 +8,7 @@ export const ProfileCardList = async () => {
     const fiskeData = await getFiskeData();
 
     return (
-        <div>
+        <div className="w-full">
             {fiskeData.map((data: IFisher) => (
                 <div key={data.navn}>
                 <ProfileCard data={data} />

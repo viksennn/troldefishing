@@ -6,12 +6,12 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
+  } from "@/components/ui/dialog";
+
 import { toast } from "@/components/ui/use-toast";
 
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
-import uniqid from "uniqid";
 
 export const FiskeOpretKnap = ({label, slug}: any) => {
 
@@ -27,8 +27,10 @@ export const FiskeOpretKnap = ({label, slug}: any) => {
     const handleOpretFisk:FormEventHandler<HTMLFormElement> = async (e) => {
 
         e.preventDefault();
+
+        const url = `http://localhost:3000/api/fisk/${slug}`;
         
-        await fetch(`http://localhost:3000/api/fisk/${slug}`, {
+        await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

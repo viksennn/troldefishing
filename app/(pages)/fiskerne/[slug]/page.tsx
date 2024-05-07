@@ -16,7 +16,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
         if (!res.ok) {
             return { fisk: null };
         }
-
         const data = await res.json();
         return data;
     }
