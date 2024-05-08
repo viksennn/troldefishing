@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <div className="flex">
-      <div className="w-1/3 flex flex-col items-center mt-32 gap-32">
+      <div className="w-1/3 flex flex-col items-center mt-16 gap-16 ">
         <div>
           <VejrComp />
         </div>
