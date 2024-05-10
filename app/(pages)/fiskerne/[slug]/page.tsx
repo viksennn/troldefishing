@@ -31,7 +31,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     if (data === null) {
         return (
             <div className="w-full pt-[250px] flex items-center justify-center">
-                <p className="font-bold text-xl">Hvad dælan... ikke nogen fisker her?</p>
+                <p className="font-bold text-xl">Hvad dælan... ikke nogen fisker her??</p>
             </div>
         )
     } else {
