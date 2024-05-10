@@ -16,6 +16,7 @@ export default function Lottie404() {
       <div>
         <Lottie 
           options={defaultOptions}
+          isClickToPauseDisabled={true}
           height={400}
           width={400}
         />

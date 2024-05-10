@@ -8,7 +8,7 @@ export default function Home() {
   return (
       <AuroraBackground>
         <div className="flex flex-col gap-2 z-1 items-center">
-         <p className="font-bold text-5xl">TroldeFishing<span className="font-normal text-gray-500">.app</span></p>
+         <p className="font-bold text-6xl tracking-tight">TroldeFishing<span className="font-normal text-gray-500">.app</span></p>
             
          <div className="flex flex-col gap-3 m-2">
               <p>W Fiske App for the boys!</p>
