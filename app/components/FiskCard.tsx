@@ -66,16 +66,16 @@ export const FiskCard = ({ data, user }:any) => {
     }
 
     return (
-        <div className="p-3 border rounded w-[400px] mt-3 flex justify-between">
+        <div className="p-3 border rounded w-full lg:w-[600px] mt-3 flex justify-between flex-col lg:flex-row mb-8">
             <div className="">
-                <p><span className="text-gray-500">Type: </span>{data.art}</p>
-                <p><span className="text-gray-500">Lokation: </span>{data.lokation}</p>
-                <p><span className="text-gray-500">Fanget med: </span>{data.agn}</p>
-                <p><span className="text-gray-500">Dato: </span>{data.dato}</p>
+                <p className="text-xl lg:text-lg"><span className="text-gray-500">Type: </span>{data.art}</p>
+                <p className="text-xl lg:text-lg"><span className="text-gray-500">Lokation: </span>{data.lokation}</p>
+                <p className="text-xl lg:text-lg"><span className="text-gray-500">Fanget med: </span>{data.agn}</p>
+                <p className="text-xl lg:text-lg"><span className="text-gray-500">Dato: </span>{data.dato}</p>
             </div>
-            <div className="flex flex-col justify-end items-center">
+            <div className="flex lg:flex-col lg:justify-end justify-center items-center mt-8 gap-10 lg:mt-2 lg:gap-2">
                 <Dialog onOpenChange={setIsOpen} open={isOpen}>
-                <DialogTrigger><FaPen /></DialogTrigger>
+                <DialogTrigger><FaPen className="w-6 h-6 lg:w-4 lg:h-4" /></DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Opret fisk</DialogTitle>
@@ -92,12 +92,13 @@ export const FiskCard = ({ data, user }:any) => {
                 </DialogContent>
             </Dialog>
                 <Popover>
-                    <PopoverTrigger><TbFishBone size={25} /></PopoverTrigger>
+                    <PopoverTrigger><TbFishBone className="w-8 h-8 lg:w-6 lg:h-6" /></PopoverTrigger>
                     <PopoverContent className="flex flex-col justify-center items-center gap-3">
-                        <p className="text-sm">Du er i gang med at slette</p>
-                        <p className="text-sm underline">{data.art}</p>
-                        <p className="text-sm font-bold">Er du sikker?</p>
-                        <button className="p-1 rounded bg-red-600 text-white text-sm" onClick={(handleDeleteClick)}><FaTrash /></button>
+                        <p className="text-sm">Sikker på du vil slette {data.art}?</p>
+                        <div className="flex gap-2 items-center">
+                            <p className="text-sm font-bold">Ja tak, </p>
+                            <button className="p-1 rounded bg-red-600 text-white text-sm" onClick={(handleDeleteClick)}><FaTrash /></button>
+                        </div>
                     </PopoverContent>
                 </Popover>
             </div>

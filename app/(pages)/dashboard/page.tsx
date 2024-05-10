@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <div className="flex">
-      <div className="w-1/3 flex flex-col items-center mt-16 gap-16 ">
+      <div className="w-full lg:w-1/3 flex flex-col items-center mt-16 gap-16 ">
         <div>
           <VejrComp />
         </div>
@@ -33,7 +33,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-2/3">
+      <div className="w-2/3 hidden lg:flex">
         <img draggable={false} src="/background.jpg" className="w-full object-cover h-[92vh]"/>
       </div>
     </div>

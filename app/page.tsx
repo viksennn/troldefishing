@@ -7,7 +7,7 @@ import { AuroraBackground } from "./components/ui/aurora-background";
 export default function Home() {
   return (
       <AuroraBackground>
-        <div className="flex flex-col gap-2 z-1 items-center">
+        <div className="flex flex-col gap-2 z-1 items-center p-10">
          <p className="font-bold text-6xl tracking-tight">TroldeFishing<span className="font-normal text-gray-500">.app</span></p>
             
          <div className="flex flex-col gap-3 m-2">

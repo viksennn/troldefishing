@@ -36,7 +36,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         )
     } else {
         return (
-            <div className="flex flex-col relative justify-between h-screen">
+            <div className="flex flex-col relative justify-between">
                 <div className="m-6">
                     <div className="flex justify-between">
                         <Link href="/fiskerne">
@@ -47,7 +47,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         </div>
                     </div>
                     <div className="flex flex-col gap-5">
-                        <p className="text-4xl font-bold">{data.navn}</p>
+                        <p className="text-4xl font-bold text-center lg:text-left">{data.navn}</p>
                         <div className="">
                             {data.fiskeData.length < 1 ? (
                                 <div>
@@ -56,7 +56,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                             ) : (
                                 <div>
                                     <FiskeDataComp data={data}/>
-                                    <div className="mt-5">
+                                    <div className="mt-5 text-center lg:text-left">
                                         <FiskeOpretKnap slug={id} label="Opret ny fisk 🐟" />
                                     </div>
                                 </div>
