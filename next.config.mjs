@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+// next.config.js
 
-module.exports = {
+const nextConfig = {
+    // Your Next.js configuration options here
     pwa: {
       dest: 'public',
       register: true,
@@ -9,4 +10,5 @@ module.exports = {
     },
   };
   
-export default nextConfig;
+  module.exports = nextConfig;
+  
