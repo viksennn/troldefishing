@@ -14,13 +14,13 @@ export const ProfileCard = ({data}:any) => {
     return (
         <div className="flex p-4 mt-2 rounded border gap-3 w-full justify-between items-center">
             <div className="flex flex-col">
-                <p className="font-bold text-xl lg:text-lg">{data.navn}</p>
+                <p className="font-bold text-xl lg:text-base">{data.navn}</p>
                 <div className="flex gap-2">
                     {fiskArray}
                 </div>
             </div>
             <div>
-                <Link className="text-gray-600 text-sm" href={profileUrl}><FaArrowRight className="p-1 w-10 h-10 lg:w-8 lg:h-8 text-gray-500 hover:text-black transition-colors"/></Link>
+                <Link className="text-gray-600 text-sm" href={profileUrl}><FaArrowRight className="p-1 w-10 h-10 lg:w-7 lg:h-7 text-gray-500 hover:text-black transition-colors"/></Link>
             </div>
         </div>
     )
