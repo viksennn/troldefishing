@@ -1,9 +1,9 @@
 {
-    "name": "FreeCodeCamp",
-    "short_name": "FreeCodeCamp",
-    "theme_color": "#00FF00",
-    "background_color": "#00FF00",
-    "display": "standalone",
+    "name": "Trolde Fishing Ap",
+    "short_name": "TroldeFishing",
+    "theme_color": "#FFFFFF",
+    "background_color": "#FFFFFF",
+    "display": "fullscreen",
     "Scope": "/",
     "start_url": "/",
     "icons": [
