@@ -10,7 +10,6 @@ class MyDocument extends Document {
           <meta name="apple-mobile-web-app-status-bar-style" content="default" />
           <meta name="apple-mobile-web-app-title" content="Trolde Fishing App" />
           <link rel="apple-touch-icon" href="/public/troldefishingimg.png" />
-          <link rel="manifest" href="/app/manifest.json" />
           <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Expires" content="0" />
