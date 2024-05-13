@@ -12,7 +12,7 @@ export const FiskeDataComp = ({data}:any) => {
         <div>
             <div className="w-full border border-indigo-100" />
             <p className="text-2xl lg:text-xl lg:text-left text-center font-bold my-8 lg:my-2">Fangster</p>
-            <div className="grid grid-cols-3 grid-flow-row">
+            <div className="flex gap-5 flex-wrap-reverse">
                 {data.fiskeData.map((fisk:any) => {
                     return <FiskCard user={userId} key={fisk._id} data={fisk} />;
                 })}
