@@ -11,7 +11,7 @@ export const ProfileCardList = async () => {
     });
 
     return (
-        <div className="w-full">
+        <div className="flex gap-5">
             {fiskeData.map((data: IFisher, index: number) => (
                 <div key={index.toString()}>
                     <ProfileCard data={data} />

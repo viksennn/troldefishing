@@ -2,6 +2,7 @@ import { DashboardHeader } from "@/app/components/dashboardComp/DashboardHeader"
 import { VejrComp } from "@/app/components/other/VejrComp";
 import Link from "next/link";
 import { FaMedal } from "react-icons/fa";
+import { FaGears } from "react-icons/fa6";
 import { GiLuckyFisherman } from "react-icons/gi";
 
 export default function Home() {

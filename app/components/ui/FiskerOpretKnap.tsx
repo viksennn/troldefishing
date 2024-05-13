@@ -44,7 +44,7 @@ export const FiskerOpretKnap = () => {
     return (
         <div>
             <Dialog onOpenChange={setIsOpen} open={isOpen}>
-                <DialogTrigger className="py-2 px-3 rounded bg-black text-white ">Opret Fisker</DialogTrigger>
+                <DialogTrigger className="py-2 px-3 rounded bg-indigo-700 text-white ">Opret Fisker</DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Opret ny fisker</DialogTitle>
