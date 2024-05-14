@@ -13,7 +13,7 @@ export const ProfileCard = ({data}:any) => {
     const profileUrl = `fiskerne/${data._id}`;
 
     return (
-        <div className="flex flex-col py-6 px-4 mt-2 rounded border gap-3 w-[500px]">
+        <div className="flex flex-col py-6 px-4 mt-2 rounded border gap-3 w-full lg:w-[500px]">
             <div className="flex flex-col">
                 <p className="font-bold text-xl lg:text-lg">{data.navn}</p>
                 <div>
@@ -27,8 +27,8 @@ export const ProfileCard = ({data}:any) => {
                     <AchivementList data={data}/>
                 </div>
             </div>
-            <div className="pt-5">
-                <Link className="text-white p-3 rounded text-sm bg-black" href={profileUrl}>Gå til profil</Link>
+            <div className="pt-5 text-center lg:text-left">
+                <Link className="text-white p-3 rounded text-sm bg-black" href={profileUrl}>Se fangster</Link>
             </div>
         </div>
     )
