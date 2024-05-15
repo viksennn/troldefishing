@@ -1,6 +1,6 @@
 {
-    "name": "Trolde Fishing",
-    "short_name": "Trolde Fishing",
+    "name": "Trolde Fishing App",
+    "short_name": "TroldeFishing",
     "theme_color": "#FFFFFF",
     "background_color": "#FFFFFF",
     "display": "standalone",

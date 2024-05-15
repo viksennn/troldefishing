@@ -12,8 +12,6 @@ class MyDocument extends Document {
           <link rel="apple-touch-icon" href="/public/troldefishingimg.png" />
           <link rel="manifest" href="manifest.json" />
           <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="0" />
         </Head>
         <body>
           <Main />
