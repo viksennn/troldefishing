@@ -79,7 +79,7 @@ export const FiskeOpretKnap = ({label, slug}: any) => {
     return (
         <div>
             <Dialog onOpenChange={setIsOpen} open={isOpen}>
-                <DialogTrigger className="py-2 px-3 rounded bg-black text-white hover:translate-x-1 transition-all lg:text-sm text-xl">{label}</DialogTrigger>
+                <DialogTrigger className="py-2 px-3 rounded bg-black text-white hover:translate-x-1 transition-all lg:text-sm text-base">{label}</DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Opret fisk</DialogTitle>

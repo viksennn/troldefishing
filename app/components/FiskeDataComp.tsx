@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { FiskCard } from "./FiskCard";
+import { Suspense } from "react";
 
 export const FiskeDataComp = ({data}:any) => {
 
@@ -12,11 +13,13 @@ export const FiskeDataComp = ({data}:any) => {
         <div>
             <div className="w-full border border-indigo-100" />
             <p className="text-2xl lg:text-xl lg:text-left text-center font-bold my-8 lg:my-2">Fangster</p>
-            <div className="flex gap-5 flex-wrap">
-                {data.fiskeData.map((fisk:any) => {
-                    return <FiskCard user={userId} key={fisk._id} data={fisk} />;
-                })}
-            </div>
+                <div className="flex gap-5 flex-wrap">
+                    {data.fiskeData.map((fisk:any) => {
+                        return (
+                            <FiskCard user={userId} key={fisk._id} data={fisk} />
+                            )
+                    })}
+                </div>
         </div>
     )
 }

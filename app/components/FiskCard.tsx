@@ -112,12 +112,12 @@ const FormSchema = z.object({
             </div>
             <div className="flex justify-between w-full">
                 <div className="">
-                    <p className="text-xl lg:text-base"><span className="text-gray-500">Type: </span>{data.art}</p>
-                    <p className="text-xl lg:text-base"><span className="text-gray-500">Lokation: </span>{data.lokation}</p>
-                    <p className="text-xl lg:text-base"><span className="text-gray-500">Fanget med: </span>{data.agn}</p>
-                    <p className="text-xl lg:text-base"><span className="text-gray-500">Dato: </span>{formatDato}</p>
+                    <p className="text-lg lg:text-base"><span className="text-gray-500">Type: </span>{data.art}</p>
+                    <p className="text-lg lg:text-base"><span className="text-gray-500">Lokation: </span>{data.lokation}</p>
+                    <p className="text-lg lg:text-base"><span className="text-gray-500">Fanget med: </span>{data.agn}</p>
+                    <p className="text-lg lg:text-base"><span className="text-gray-500">Dato: </span>{formatDato}</p>
                 </div>
-                <div className="flex lg:flex-col lg:justify-end justify-center items-center mt-8 gap-10 lg:mt-2 lg:gap-2">
+                <div className="flex flex-col lg:justify-end justify-between items-center mt-8 lg:mt-2 lg:gap-2">
                 <Dialog onOpenChange={setIsOpen} open={isOpen}>
                         <DialogTrigger><FaPen className="w-6 h-6 lg:w-4 lg:h-4" /></DialogTrigger>
                     <DialogContent>
