@@ -1,10 +1,7 @@
-import { ProfileCard } from "@/app/components/ProfileCard";
+import { FiskerProfileLoading } from "@/app/components/LoadingFallback";
 import { ProfileCardList } from "@/app/components/ProfileCardList";
-import { DashboardHeader } from "@/app/components/dashboardComp/DashboardHeader";
 import { FiskerOpretKnap } from "@/app/components/ui/FiskerOpretKnap";
-import { getFiskeData } from "@/app/data/dataFetch";
-import { IFisher } from "@/types/IFisher";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function Home() {
   return (
@@ -12,7 +9,9 @@ export default function Home() {
         <div className="w-full h-[90vh] px-10 flex flex-col justify-between">
           <div className="">
             <h1 className="text-2xl text-center font-bold pb-4 lg:text-left">Fiskerne</h1>
-            <ProfileCardList />
+            <Suspense fallback={<FiskerProfileLoading />}>
+              <ProfileCardList />
+            </Suspense>
           </div>
           <div>
             <div className="flex items-center justify-center m-5">

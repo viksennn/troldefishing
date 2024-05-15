@@ -6,6 +6,7 @@ import { PAGE_URL } from "@/app/url";
 import { toast } from "@/components/ui/use-toast";
 import { IFisher } from "@/types/IFisher";
 import Link from "next/link";
+import { Suspense } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
 export default async function Page({ params }: { params: { slug: string } }) {
@@ -48,20 +49,22 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     </div>
                     <div className="flex flex-col gap-5">
                         <p className="text-4xl font-bold text-center lg:text-left">{data.navn}</p>
-                        <div className="">
-                            {data.fiskeData.length < 1 ? (
-                                <div>
-                                    <FiskeOpretKnap slug={id} label="Opret din første fisk 😮" />
-                                </div>
-                            ) : (
-                                <div>
-                                    <FiskeDataComp data={data}/>
-                                    <div className="mt-5 text-center lg:text-left">
-                                        <FiskeOpretKnap slug={id} label="Opret ny fisk 🐟" />
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <div className="">
+                                {data.fiskeData.length < 1 ? (
+                                    <div>
+                                        <FiskeOpretKnap slug={id} label="Opret din første fisk 😮" />
                                     </div>
-                                </div>
-                            )}
-                        </div>
+                                ) : (
+                                    <div>
+                                        <FiskeDataComp data={data}/>
+                                        <div className="mt-5 text-center lg:text-left">
+                                            <FiskeOpretKnap slug={id} label="Opret ny fisk 🐟" />
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </Suspense>
                     </div>
                 </div>
             </div>
