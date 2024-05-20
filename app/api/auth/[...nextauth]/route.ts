@@ -1,11 +1,11 @@
 import { FishingModel } from '@/app/data/mongoFishingModel';
 import { connectMongo } from '@/app/data/mongodb';
-import NextAuth, { AuthOptions } from 'next-auth';
+import NextAuth, { AuthOptions, NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 import bcrypt from 'bcryptjs';
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             name: 'credentials',
@@ -35,7 +35,7 @@ export const authOptions = {
             },
         }),
     ],
-    session: {
+    session: {  
         strategy: "jwt",
     },
     secret: process.env.NEXTAUTH_SECRET,
