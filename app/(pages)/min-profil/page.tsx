@@ -1,9 +1,9 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { FiskeDataComp } from "@/app/components/FiskeDataComp";
 import { ProfileSetting } from "@/app/components/ProfileSetting";
 import { AchivementList } from "@/app/components/achivements/AchivementList";
 import { FiskeOpretKnap } from "@/app/components/ui/FiskOpretKnap";
 import { PAGE_URL } from "@/app/url";
+import { authOptions } from "@/lib/authOptions";
 import { IFisher } from "@/types/IFisher";
 import { getServerSession } from "next-auth";
 
