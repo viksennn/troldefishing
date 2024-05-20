@@ -12,7 +12,6 @@ import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
 
-import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -48,6 +47,8 @@ const FormSchema = z.object({
 
 export const FiskeOpretKnap = ({label, slug}: any) => {
 
+    const router = useRouter();
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
       })
@@ -67,12 +68,11 @@ export const FiskeOpretKnap = ({label, slug}: any) => {
 
         router.refresh();
         setIsOpen(false);
+
         toast( {
             title: `Fangst er blevet tilføjet 🎣`
         })
       }
-
-    const router = useRouter();
 
     const [isOpen, setIsOpen] = useState<boolean>();
 

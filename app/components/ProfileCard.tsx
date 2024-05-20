@@ -24,7 +24,7 @@ export const ProfileCard = ({data}:any) => {
                     </div>
                 </div>
                 <div>
-                    <AchivementList data={data}/>
+                    <AchivementList data={data} variant={"lille"}/>
                 </div>
             </div>
             <div className="pt-5 text-center lg:text-left">

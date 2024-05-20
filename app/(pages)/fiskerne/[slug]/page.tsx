@@ -1,5 +1,6 @@
 import { FiskeDataComp } from "@/app/components/FiskeDataComp";
 import { ProfileSetting } from "@/app/components/ProfileSetting";
+import { AchivementList } from "@/app/components/achivements/AchivementList";
 import { FiskeOpretKnap } from "@/app/components/ui/FiskOpretKnap";
 import { FishingModel } from "@/app/data/mongoFishingModel";
 import { PAGE_URL } from "@/app/url";
@@ -43,30 +44,21 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         <Link href="/fiskerne">
                             <IoMdArrowRoundBack size={35} className="text-white bg-black rounded-full p-1 mt-2 mb-10 transition-all hover:scale-[1.1]"/>
                         </Link>
-                        <div className="flex gap-8 items-center">
-                            <ProfileSetting data={data} />
-                        </div>
                     </div>
                     <div className="flex flex-col gap-5">
-                        <p className="text-4xl font-bold text-center lg:text-left">{data.navn}</p>
-                        <Suspense fallback={<div>Loading...</div>}>
-                            <div className="">
-                                {data.fiskeData.length < 1 ? (
-                                    <div>
-                                        <FiskeOpretKnap slug={id} label="Opret din første fisk 😮" />
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <FiskeDataComp data={data}/>
-                                        <div className="mt-5 text-center lg:text-left">
-                                            <FiskeOpretKnap slug={id} label="Opret ny fisk 🐟" />
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </Suspense>
+                        <div className="ml-5">
+                            <p className="text-4xl font-bold text-center lg:text-left">{data.navn}</p>
+                        </div>
+                        <div className="ml-5 mt-5">
+                            <p className="text-xl">Achivements</p>
+                            <AchivementList data={data} variant={"stor"} />
+                        </div>
+                        <div className="ml-5 mt-5">
+                            <p className="text-xl">Fangster</p>
+                        </div>
+                        <FiskeDataComp variant="fisker" user={data._id} data={data}/>
+                        </div>
                     </div>
-                </div>
             </div>
         )
     }
