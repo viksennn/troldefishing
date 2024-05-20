@@ -7,6 +7,7 @@ import { FormEventHandler, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5"
 import { PAGE_URL } from "../url";
+import { signOut } from "next-auth/react";
 
 export const ProfileSetting = ({data}:any) => {
 
@@ -27,15 +28,11 @@ export const ProfileSetting = ({data}:any) => {
                 method: "DELETE",
             })
 
-            console.log("Delete")
+            console.log("Delete");
+            
+            signOut();
+            router.push("/");
 
-
-            setIsOpen(false);
-            router.push("/fiskerne");
-            router.refresh();
-            toast({
-                title: `${data.navn} er blevet slettet`,
-            });
         } else {
             setIsOpen(false);
         }
@@ -43,7 +40,6 @@ export const ProfileSetting = ({data}:any) => {
 
     const handleEdit:FormEventHandler<HTMLFormElement> = async (e) => {
 
-        console.log("test")
         e.preventDefault();
 
         await fetch(`http://localhost:3000/api/fisk/${id}`, {
@@ -57,7 +53,7 @@ export const ProfileSetting = ({data}:any) => {
         setIsOpen(false);
         router.refresh();
         toast( {
-            title: "Navnet er blevet ændret!"
+            title: "Din navn er blevet ændret!"
         })
     }
 

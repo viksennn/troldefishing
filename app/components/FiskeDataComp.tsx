@@ -1,25 +1,43 @@
 "use client"
 
 import { useRouter } from "next/navigation";
+import { FiskCardProfile } from "./FiskCardProfile";
+import { Suspense, useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { FiskCard } from "./FiskCard";
-import { Suspense } from "react";
 
-export const FiskeDataComp = ({data}:any) => {
+export const FiskeDataComp = ({data, variant}:any) => {
 
-
-    const userId: String = data._id;
-
-    return (
-        <div>
-            <div className="w-full border border-indigo-100" />
-            <p className="text-2xl lg:text-xl lg:text-left text-center font-bold my-8 lg:my-2">Fangster</p>
-                <div className="flex gap-5 flex-wrap">
+    if (variant === "profil") {
+    
+        return (
+            <div>
+                <div className="flex gap-5 flex-wrap px-5">
                     {data.fiskeData.map((fisk:any) => {
                         return (
-                            <FiskCard user={userId} key={fisk._id} data={fisk} />
-                            )
+                            <FiskCardProfile user={data._id} key={fisk._id} data={fisk} />
+                        )
                     })}
                 </div>
+            </div>
+        )
+    } else if (variant === "fisker") {
+        return (
+            <div>
+            <div className="flex gap-5 flex-wrap px-5">
+                {data.fiskeData.map((fisk:any) => {
+                    return (
+                        <FiskCard user={data._id} key={fisk._id} data={fisk} />
+                    )
+                })}
+            </div>
         </div>
-    )
+        )
+    } else {
+        return (
+            <div>
+                <p>Der er sket en fejl</p>
+            </div>
+        )
+    }
 }

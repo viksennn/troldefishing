@@ -13,11 +13,10 @@ export const VejrComp = async () => {
 
     const data = await weatherData();
 
-    const iconSize = 15;
+    const iconSize = 25;
 
     const tempData = [
         {name: "Temperatur", data: `${data.current.temp_c}°C`, icon: <FaTemperatureHalf size={iconSize} />},
-        {name: "Vind", data: `${data.current.wind_kph} m/s`, icon: <FaWind size={iconSize} />},
     ]
 
     return (
@@ -26,12 +25,12 @@ export const VejrComp = async () => {
                 <img draggable={false} src={data.current.condition.icon} alt="weather icon" className="h-10"/>
                 <p className="text-4xl">{data.location.name}</p>
             </div>
-            <div className="flex gap-10 p-3 roundedborder-2">
+            <div className="flex gap-10 p-3 roundedborder-2 items-center justify-center">
                 {tempData.map(temp => {
                     return (
-                        <div key={temp.name} className="flex gap-1 items-center">
+                        <div key={temp.name} className="flex items-center gap-1">
                             {temp.icon}
-                            <p>{temp.data}</p>
+                            <p className="text-3xl">{temp.data}</p>
                         </div>
                     )
                 })}

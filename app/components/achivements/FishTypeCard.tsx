@@ -13,6 +13,9 @@ export const FishTypeCard = ({ data }: any) => {
         case "Laks":
             fishImg = "/ach/salmon.png";
             break;
+        case "Aborre":
+            fishImg = "/ach/aborre.png";
+            break;
         default:
             // Hvis fisketype ikke matcher nogen kendte typer, kan du vælge at vise et standardbillede eller ingen billede
             break;
@@ -20,7 +23,7 @@ export const FishTypeCard = ({ data }: any) => {
 
     return (
         <div>
-            <img draggable={false} src={fishImg} alt="fish" width={75} />
+            <img draggable={false} src={fishImg} alt="fish" className="w-[65px] object-cover lg:w-[80px]" />
         </div>
     );
 }

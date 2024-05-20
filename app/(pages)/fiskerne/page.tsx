@@ -13,11 +13,6 @@ export default function Home() {
               <ProfileCardList />
             </Suspense>
           </div>
-          <div>
-            <div className="flex items-center justify-center m-5">
-              <FiskerOpretKnap />
-            </div>
-          </div>
         </div>
     </div>
   );

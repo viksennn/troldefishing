@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { LogOutButton } from "../ui/LogOutButton"
 
 export const DashboardHeader = () => {
 
@@ -6,8 +7,9 @@ export const DashboardHeader = () => {
         <div 
         className="flex justify-between px-10 py-4 items-center shadow-sm"
         >
-            <div>
+            <div className="flex justify-between items-center w-full">
                 <Link href="/dashboard" className="font-bold">TroldeFishing</Link>
+                <LogOutButton />
             </div>
         </div>
     )

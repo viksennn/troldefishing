@@ -8,8 +8,18 @@ const fishingStatsData = new mongoose.Schema({
 });
 
 const fishingStats = new mongoose.Schema({
-    navn: String,
-    fiskeData: [fishingStatsData],
+    navn: {
+        type: String,
+        required: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    fiskeData: {
+        type: [fishingStatsData],
+        required: true,
+    },
   }, { collection: 'FishingData' });
 
 export const FishingModel = mongoose.models.FishingData || mongoose.model('FishingData', fishingStats);
