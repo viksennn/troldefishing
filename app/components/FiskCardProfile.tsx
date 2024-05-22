@@ -108,7 +108,7 @@ const FormSchema = z.object({
 
     
     return (
-        <div className="p-3 border rounded w-full lg:w-[400px] mt-3 flex lg:flex-row mb-8">
+        <div className="p-3 border rounded w-full lg:w-[400px] mt-3 flex flex-row mb-8">
             <div className="flex items-center justify-center mr-5">
                 <FishTypeCard data={data}/>
             </div>
@@ -119,10 +119,10 @@ const FormSchema = z.object({
                     <p className="text-lg lg:text-base"><span className="text-gray-500">Fanget med: </span>{data.agn}</p>
                     <p className="text-lg lg:text-base"><span className="text-gray-500">Dato: </span>{formatDato}</p>
 
-                    {data.imgUrl ? (<FiskeBillede img={imgUrl} />) : <p className="text-gray-700 text-sm mt-1.5 font-bold">Intet billede</p>}
+                    {data.imgUrl ? (<FiskeBillede img={imgUrl} />) : <p className="text-gray-700 text-base lg:text-sm mt-1.5 font-bold">Intet billede</p>}
                     
                 </div>
-                <div className="flex flex-col lg:justify-end justify-between items-center mt-8 lg:mt-2 lg:gap-2">
+                <div className="flex flex-col lg:justify-end gap-10 items-center mt-8 lg:mt-2 lg:gap-2">
                 <Dialog onOpenChange={setIsOpen} open={isOpen}>
                         <DialogTrigger><FaPen className="w-6 h-6 lg:w-4 lg:h-4" /></DialogTrigger>
                     <DialogContent>
