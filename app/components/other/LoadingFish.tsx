@@ -7,8 +7,8 @@ export const LoadingFish = () => {
     
     return (
         <motion.div className='flex w-full h-[80vh] justify-center items-center'
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0, scale: 0.5}}
+        animate={{ opacity: 1, scale: 1}}
         >
             <div className='pb-[50px] animate-spin'>
                 <IoFish size={40}/>
