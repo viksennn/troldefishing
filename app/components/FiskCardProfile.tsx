@@ -21,6 +21,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { FishTypeCard } from "./achivements/FishTypeCard";
+import { FiskeBillede } from "./ui/FiskeBillede";
+import { utapi } from "../server/uploadthings";
 
 const FormSchema = z.object({
     art: z
@@ -57,7 +59,7 @@ const FormSchema = z.object({
             art: data.art,
             lokation: data.lokation,
             agn: data.agn,
-            dato: date
+            dato: date,
         },
       })
      
@@ -82,6 +84,9 @@ const FormSchema = z.object({
         })
       }
 
+    const imgUrl = data.imgUrl;
+    const imgKey = data.imgKey;
+
     const handleDeleteClick = async () => {
         const url = `${PAGE_URL}/api/fisk/${user}`;
         await fetch(url, {
@@ -89,7 +94,7 @@ const FormSchema = z.object({
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ fishId: id }),
+            body: JSON.stringify({ fishId: id, imgKey }),
         });
 
         router.refresh();
@@ -100,8 +105,6 @@ const FormSchema = z.object({
     };
 
     const formatDato = format(new Date(data.dato), 'dd-MM-yyyy')
-
-
 
     
     return (
@@ -115,6 +118,9 @@ const FormSchema = z.object({
                     <p className="text-lg lg:text-base"><span className="text-gray-500">Lokation: </span>{data.lokation}</p>
                     <p className="text-lg lg:text-base"><span className="text-gray-500">Fanget med: </span>{data.agn}</p>
                     <p className="text-lg lg:text-base"><span className="text-gray-500">Dato: </span>{formatDato}</p>
+
+                    {data.imgUrl ? (<FiskeBillede img={imgUrl} />) : <p className="text-gray-700 text-sm mt-1.5 font-bold">Intet billede</p>}
+                    
                 </div>
                 <div className="flex flex-col lg:justify-end justify-between items-center mt-8 lg:mt-2 lg:gap-2">
                 <Dialog onOpenChange={setIsOpen} open={isOpen}>

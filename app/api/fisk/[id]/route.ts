@@ -2,6 +2,7 @@ import { connectMongo } from "@/app/data/mongodb";
 import { NextResponse } from "next/server";
 import { FishingModel } from "@/app/data/mongoFishingModel";
 import uniqid from 'uniqid';
+import { UTApi } from "uploadthing/server";
 
 export async function GET(req:any, {params}:any) {
     const { id } = params;
@@ -20,7 +21,7 @@ export async function PUT(req:any, {params}:any ) {
 
 export async function POST(req: any, {params}:any) {
     const {id} = params;
-    const {art, agn, lokation, dato} = await req.json();
+    const {art, agn, lokation, dato, imgUrl, imgKey} = await req.json();
 
     await connectMongo();
 
@@ -28,7 +29,9 @@ export async function POST(req: any, {params}:any) {
         art: art,
         agn: agn,
         lokation: lokation,
-        dato: dato
+        dato: dato,
+        imgUrl: imgUrl,
+        imgKey: imgKey
     }
     
     try {
@@ -43,11 +46,16 @@ export async function POST(req: any, {params}:any) {
 
 export async function DELETE(req: any, { params }: any) {
     const { id } = params;
-    const { fishId } = await req.json();
+    const { fishId, imgKey } = await req.json();
     
     await connectMongo();
 
     try {
+
+        const utapi = new UTApi();
+
+        await utapi.deleteFiles(imgKey);
+
         await FishingModel.findOneAndUpdate({ _id: id }, { $pull: { fiskeData: { _id: fishId } } });
         return NextResponse.json({ message: "Fish deleted successfully" }, { status: 200 });
     } catch (error) {

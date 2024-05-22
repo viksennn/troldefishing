@@ -7,6 +7,7 @@ export interface IFisher {
             agn: string,
             lokation: string,
             dato: string,
+            imgUrl: string,
             _id: string
         }
     ]

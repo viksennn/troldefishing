@@ -21,6 +21,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { FishTypeCard } from "./achivements/FishTypeCard";
+import { FiskeBillede } from "./ui/FiskeBillede";
 
 const FormSchema = z.object({
     art: z
@@ -101,9 +102,8 @@ const FormSchema = z.object({
 
     const formatDato = format(new Date(data.dato), 'dd-MM-yyyy')
 
+    const imgUrl = data.imgUrl;
 
-
-    
     return (
         <div className="p-3 border rounded w-full lg:w-[400px] mt-3 flex lg:flex-row mb-8">
             <div className="flex items-center justify-center mr-5">
@@ -115,6 +115,9 @@ const FormSchema = z.object({
                     <p className="text-base"><span className="text-gray-500">Lokation: </span>{data.lokation}</p>
                     <p className="text-base"><span className="text-gray-500">Fanget med: </span>{data.agn}</p>
                     <p className="text-base"><span className="text-gray-500">Dato: </span>{formatDato}</p>
+
+                    {data.imgUrl ? (<FiskeBillede img={imgUrl} />) : <p className="text-gray-700 text-sm mt-1.5 font-bold">Intet billede</p>}
+                    
                 </div>
                 
             </div>

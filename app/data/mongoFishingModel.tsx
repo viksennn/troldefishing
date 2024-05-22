@@ -5,6 +5,8 @@ const fishingStatsData = new mongoose.Schema({
     lokation: String,
     agn: String,
     dato: String,
+    imgUrl: String,
+    imgKey: String,
 });
 
 const fishingStats = new mongoose.Schema({
@@ -24,9 +26,6 @@ const fishingStats = new mongoose.Schema({
 
 export const FishingModel = mongoose.models.FishingData || mongoose.model('FishingData', fishingStats);
 
-const fiskeArter = new mongoose.Schema({
-    art: String,
-});
 
 const adminFiskeData = new mongoose.Schema({
     adminSettingName: String,

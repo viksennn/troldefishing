@@ -28,7 +28,7 @@ export async function GET(req: any, { params }: any) {
 
 export async function PUT(req: any, { params }: any) {
     const { id, fishId } = params;
-    const {art, agn, lokation, dato} = await req.json();
+    const {art, agn, lokation, dato, imgUrl} = await req.json();
 
     await connectMongo();
 
@@ -36,7 +36,7 @@ export async function PUT(req: any, { params }: any) {
         art: art,
         agn: agn,
         lokation: lokation,
-        dato: dato
+        dato: dato,
     }
 
     try {
