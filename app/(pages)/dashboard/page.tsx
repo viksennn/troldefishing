@@ -27,7 +27,7 @@ export default function Home() {
           <div className="flex">
             {links.map(link => {
               return (
-                <Link key={link.name} href={link.path} className="flex gap-3 items-center justify-center text-xl p-2 m-5 text-white bg-gradient-to-b from-indigo-800 to-indigo-600 rounded hover:translate-y-[-3px] transition-all">
+                <Link key={link.name} href={link.path} className="hover:cursor-pointer flex gap-3 items-center justify-center text-xl p-2 m-5 text-white bg-gradient-to-b from-indigo-800 to-indigo-600 rounded hover:translate-y-[-3px] transition-all">
                   {link.icon ? (link.icon) : link.name}
                   <p>{link.name}</p>
                 </Link>
