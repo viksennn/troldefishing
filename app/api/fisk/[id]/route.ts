@@ -54,7 +54,9 @@ export async function DELETE(req: any, { params }: any) {
 
         const utapi = new UTApi();
 
-        await utapi.deleteFiles(imgKey);
+        if (imgKey) {
+            await utapi.deleteFiles(imgKey);
+        }
 
         await FishingModel.findOneAndUpdate({ _id: id }, { $pull: { fiskeData: { _id: fishId } } });
         return NextResponse.json({ message: "Fish deleted successfully" }, { status: 200 });
