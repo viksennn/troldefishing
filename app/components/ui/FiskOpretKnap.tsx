@@ -241,7 +241,7 @@ export const FiskeOpretKnap = ({label, slug}: any) => {
                                             alert(`ERROR! ${error.message}`);
                                             }}
                                         />
-                                        {uploadComplete && <p className="mt-2 text-sm text-green-500 font-bold">Billedet er blevet uploadet</p>}
+                                        {uploadComplete && <p className="mt-2 text-sm text-green-500 font-semibold">Billedet er blevet uploadet</p>}
                                  </div>
                             <Button type="submit">Færdig</Button>
                         </form>
