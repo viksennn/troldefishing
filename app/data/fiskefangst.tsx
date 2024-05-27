@@ -15,6 +15,7 @@ export const fiskeLokationerData = [
     "Stauning",
     "Troldhede",
     "Fårup",
+    "Limfjorden"
 ]
 
 export const fiskeAgnData = [
