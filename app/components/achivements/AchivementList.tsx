@@ -52,6 +52,8 @@ export const AchivementList = (achdata: { data:any, variant:string }) => {
 
     const [gapSize, setGapSize] = useState<number>(0);
 
+    const [fangetHornfisk, setFangetHornfisk] = useState<boolean>(false);
+
     const [fangetNoget, setFangetNoget] = useState<boolean>(false);
     const [fangetØrred, setFangetØrred] = useState<boolean>(false);
     const [fangetAborre, setFangetAborre] = useState<boolean>(false);
@@ -84,6 +86,12 @@ export const AchivementList = (achdata: { data:any, variant:string }) => {
         const isAborreFanget = fiskeData.some((fiskeData: any) => fiskeData.art === "Aborre");
         if (isAborreFanget) {
             setFangetAborre(true);
+        }
+
+        //ACH: Fanget en Hornfisk
+        const isHornfiskFanget = fiskeData.some((fiskeData: any) => fiskeData.art === "Hornfisk");
+        if (isHornfiskFanget) {
+            setFangetHornfisk(true);
         }
 
         //ACH: Fanget 5 regnbueørreder
@@ -133,6 +141,11 @@ export const AchivementList = (achdata: { data:any, variant:string }) => {
                             label: "Fanget sin første Ørred", title: "", src: "/ach/rainbow-trout.png",
                             variant: achdata.variant
                         })}
+                        {fangetHornfisk && generateTooltip({
+                            label: "Fanget sin første Hornfisk", title: "", src: "/ach/hornfisk.png",
+                            variant: achdata.variant
+                        })
+                        }
                         {fangetNoget && generateTooltip({
                             label: "Første fangst", title: "Officiel Fisker", src: "/ach/fishing-rod.png",
                             variant: achdata.variant

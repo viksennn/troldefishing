@@ -2,11 +2,11 @@ export const fiskeArterData = [
     "Regnbue Ørred",
     "Guld Ørred",
     "Gedde",
+    "Hornfisk",
     "Aborre",
     "Laks",
     "Bækørred",
     "Havørred",
-    "Hornfisk",
 ]
 
 export const fiskeLokationerData = [
