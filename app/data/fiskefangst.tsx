@@ -20,6 +20,7 @@ export const fiskeLokationerData = [
 export const fiskeAgnData = [
     "Spinner",
     "Blink",
+    "Gummifisk",
     "Gennemløber",
     "Powerbait",
 ]
