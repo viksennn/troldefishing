@@ -5,6 +5,7 @@ export const fiskeArterData = [
     "Hornfisk",
     "Aborre",
     "Laks",
+    "Makrel",
     "Bækørred",
     "Havørred",
 ]
@@ -15,7 +16,8 @@ export const fiskeLokationerData = [
     "Stauning",
     "Troldhede",
     "Fårup",
-    "Limfjorden"
+    "Limfjorden",
+    "Bovbjerg"
 ]
 
 export const fiskeAgnData = [

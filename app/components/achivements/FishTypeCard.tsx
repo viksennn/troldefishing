@@ -19,6 +19,9 @@ export const FishTypeCard = ({ data }: any) => {
         case "Hornfisk":
             fishImg = "/ach/hornfisk.png";
             break;
+        case "Makrel":
+            fishImg = "/ach/makrel.png";
+            break;
         default:
             // Hvis fisketype ikke matcher nogen kendte typer, kan du vælge at vise et standardbillede eller ingen billede
             break;
