@@ -42,7 +42,7 @@ export const ProfileSetting = ({data}:any) => {
 
         e.preventDefault();
 
-        await fetch(`http://localhost:3000/api/fisk/${id}`, {
+        await fetch(`${PAGE_URL}/api/fisk/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
