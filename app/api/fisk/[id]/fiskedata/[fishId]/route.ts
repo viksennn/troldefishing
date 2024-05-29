@@ -37,6 +37,7 @@ export async function PUT(req: any, { params }: any) {
         agn: agn,
         lokation: lokation,
         dato: dato,
+        imgUrl: imgUrl
     }
 
     try {

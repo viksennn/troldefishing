@@ -65,6 +65,8 @@ const FormSchema = z.object({
      
       async function onSubmit(data: z.infer<typeof FormSchema>) {
 
+        
+
         const url = `${PAGE_URL}/api/fisk/${user}/fiskedata/${id}`;
 
         await fetch(url, {
