@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/fisk/[id]/route.js", "app/api/auth/[...nextauth]/route.ts", "app/api/auth/[...nextauth]/route.ts", "/lib/next-auth-declare.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/fisk/[id]/route.js", "app/api/auth/[...nextauth]/route.ts", "app/api/auth/[...nextauth]/route.ts", "/lib/next-auth-declare.ts", "app/(pages)/achivements/page.js", "app/(pages)/achivements/page.js"],
   "exclude": ["node_modules"]
 }

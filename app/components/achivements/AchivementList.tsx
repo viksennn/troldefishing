@@ -48,6 +48,7 @@ const generateTooltip = (achivementData: { label: string, src: string, title:str
 
 export const AchivementList = (achdata: { data:any, variant:string }) => {
 
+
     const fiskeData = achdata.data.fiskeData;
 
     const [gapSize, setGapSize] = useState<number>(0);
@@ -128,11 +129,11 @@ export const AchivementList = (achdata: { data:any, variant:string }) => {
                 {fangetNoget && (
                     <div className={`flex mt-5 gap-2 lg:gap-${gapSize}`}>
                         {fanget10Ørreder && generateTooltip({
-                            label: "Fanget 10 Ørreder", title: "Ørred Master", src: "/ach/rainbow-trout10.png",
+                            label: "Fanget 10 Regnbue Ørreder", title: "Ørred Master", src: "/ach/rainbow-trout10.png",
                             variant: achdata.variant
                         })}
                         {fanget5Ørreder && generateTooltip({
-                            label: "Fanget 5 Ørreder", title: "Ørred Pro", src: "/ach/rainbow-trout5.png",
+                            label: "Fanget 5 Regnbue Ørreder", title: "Ørred Pro", src: "/ach/rainbow-trout5.png",
                             variant: achdata.variant
                         })}
                         {fangetAborre && generateTooltip({

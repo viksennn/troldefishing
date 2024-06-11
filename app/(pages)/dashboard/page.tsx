@@ -24,7 +24,7 @@ export default function Home() {
         <div className="flex flex-col items-center">
           <p className="text-lg">Navigation</p>
           <div className="w-full border-b border"/>
-          <div className="flex">
+          <div className="flex flex-col">
             {links.map(link => {
               return (
                 <Link key={link.name} href={link.path} className="hover:cursor-pointer flex gap-3 items-center justify-center text-xl p-2 m-5 text-white bg-gradient-to-b from-indigo-800 to-indigo-600 rounded hover:translate-y-[-3px] transition-all">
