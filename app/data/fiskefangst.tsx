@@ -17,6 +17,7 @@ export const fiskeLokationerData = [
     "Borris",
     "Stauning",
     "Troldhede",
+    "Karup Å",
     "Fårup",
     "Limfjorden",
     "Bovbjerg"
