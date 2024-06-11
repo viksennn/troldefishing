@@ -8,6 +8,8 @@ export const fiskeArterData = [
     "Makrel",
     "Bækørred",
     "Havørred",
+    "Skalle",
+    "Brasen"
 ]
 
 export const fiskeLokationerData = [
