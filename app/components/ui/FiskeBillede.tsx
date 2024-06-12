@@ -11,8 +11,8 @@ export const FiskeBillede = ({img}: any) => {
     return (
             <Dialog>
                 <DialogTrigger className="p-2 rounded bg-black text-white text-sm mt-1">Vis billede</DialogTrigger>
-                <DialogContent className="bg w-auto p-1 flex items-center justify-center">
-                    <img src={img} alt="fiskebillede" className="w-full rounded" />
+                <DialogContent className="bg p-2 w-[80vw] h-[80vh] flex items-center justify-center rounded overflow-hidden">
+                    <img src={img} alt="fiskebillede" className="rounded" />
                 </DialogContent>
             </Dialog>
     )

@@ -3,6 +3,24 @@
   @tailwind utilities;
 
   @layer base {
+
+    @keyframes border-rotate {
+      0% {
+          border-color: rgb(0, 0, 175);
+      }
+      50% {
+          border-color: rgb(107, 0, 173);
+      }
+      100% {
+          border-color: rgb(0, 0, 175);
+      }
+  }
+  
+  .border-animate {
+      animation: border-rotate 2s linear infinite;
+  }
+  
+
     .bg-dashboard {
       background-image: url('/public/background.jpg');
     }
