@@ -107,7 +107,7 @@ export const AchivementList = (achdata: { data:any, variant:string }) => {
         //ACH: Fanget en Skalle
         const isSkalleFanget = fiskeData.some((fiskeData: any) => fiskeData.art === "Skalle");
         if (isSkalleFanget) {
-            setFangetHornfisk(true);
+            setFangetSkalle(true);
         }
 
         //ACH: Fanget 5 regnbueørreder
