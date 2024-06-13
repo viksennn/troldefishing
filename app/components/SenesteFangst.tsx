@@ -4,6 +4,7 @@ import { PAGE_URL } from '../url';
 import { FiskeBillede } from './ui/FiskeBillede';
 import { FishIcon } from 'lucide-react';
 import { FaFish } from 'react-icons/fa6';
+import Link from 'next/link';
 
 interface FiskeData {
   art: string;
@@ -26,6 +27,7 @@ interface Person {
 interface CatchWithFisher {
   catch: FiskeData;
   fisherman: string;
+  id: string,
 }
 
 const SenesteFangst: React.FC = () => {
@@ -43,7 +45,8 @@ const SenesteFangst: React.FC = () => {
           const allCatches: CatchWithFisher[] = data.flatMap(person => 
             person.fiskeData.map(fiskeData => ({
               catch: fiskeData,
-              fisherman: person.navn
+              fisherman: person.navn,
+              id: person._id
             }))
           );
 
@@ -71,7 +74,7 @@ const SenesteFangst: React.FC = () => {
     <div className='flex lg:flex-row flex-col gap-10 items-center border p-5 rounded lg:w-[500px] lg:h-[350px] w-screen justify-between'>
       <div>
         <div className='flex flex-col gap-3'>
-            <p className='text-xl font-bold'>{latestCatch.fisherman}</p>
+            <Link href={`/fiskerne/${latestCatch.id}`} className='text-xl font-bold hover:underline'>{latestCatch.fisherman}</Link>
             <p>En {latestCatch.catch.art} ved {latestCatch.catch.lokation}. <br/> Fanget på {latestCatch.catch.agn}.</p>
             <p className='text-sm'>Dato: {new Date(latestCatch.catch.dato).toLocaleDateString()}</p>
         </div>
