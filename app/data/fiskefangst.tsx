@@ -29,6 +29,7 @@ export const fiskeAgnData = [
     "Blink",
     "Gummifisk",
     "Gennemløber",
+    "Majs",
     "Powerbait",
     "Krog",
 ]
