@@ -121,7 +121,7 @@ const FormSchema = z.object({
                     <p className="text-lg lg:text-base"><span className="text-gray-500">Fanget med: </span>{data.agn}</p>
                     <p className="text-lg lg:text-base"><span className="text-gray-500">Dato: </span>{formatDato}</p>
 
-                    {data.imgUrl ? (<FiskeBillede img={imgUrl} />) : <p className="text-gray-700 text-base lg:text-sm mt-1.5 font-bold">Intet billede</p>}
+                    {data.imgUrl ? (<FiskeBillede img={imgUrl} trigger={<p className="text-sm p-1">Se billede</p>} />) : <p className="text-gray-700 text-base lg:text-sm mt-1.5 font-bold">Intet billede</p>}
                     
                 </div>
                 <div className="flex flex-col lg:justify-end gap-10 items-center mt-8 lg:mt-2 lg:gap-2">

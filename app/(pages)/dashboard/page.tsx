@@ -1,3 +1,4 @@
+import SenesteFangst from "@/app/components/SenesteFangst";
 import { VejrComp } from "@/app/components/other/VejrComp";
 import UserHello from "@/app/components/ui/UserHello";
 import Link from "next/link";
@@ -13,31 +14,27 @@ export default function Home() {
   ]
 
   return (
-    <div className="flex">
-      <div className="w-full lg:w-1/3 flex flex-col items-center mt-16 gap-16 ">
-        <div>
-          <UserHello /> 
-        </div>
-        <div>
+    <div className="flex lg:flex-row flex-col items-center justify-center lg:h-[80vh] gap-10 lg:gap-0">
+      <div className="flex flex-col m-10 gap-10 justify-between h-[300px]">
+        <div className="flex flex-col gap-5 items-center">
           <VejrComp />
         </div>
-        <div className="flex flex-col items-center">
-          <p className="text-lg">Navigation</p>
-          <div className="w-full border-b border"/>
-          <div className="flex flex-col">
-            {links.map(link => {
-              return (
-                <Link key={link.name} href={link.path} className="hover:cursor-pointer flex gap-3 items-center justify-center text-xl p-2 m-5 text-white bg-gradient-to-b from-indigo-800 to-indigo-600 rounded hover:translate-y-[-3px] transition-all">
-                  {link.icon ? (link.icon) : link.name}
-                  <p>{link.name}</p>
-                </Link>
-                )
-            })}
-          </div>
+        <div className="flex flex-col gap-5">
+          {links.map(link => (
+            <Link key={link.name} href={link.path} className="flex h-[55px] gap-2 items-center justify-center bg-indigo-400 text-white py-1 px-2 rounded">
+              {link.icon}
+              {link.name}
+            </Link>
+          ))}
         </div>
       </div>
-      <div className="w-2/3 hidden lg:flex">
-        <img draggable={false} src="/background.jpg" className="w-full object-cover h-[92vh]"/>
+      <div>
+        <div>
+          <div className="mb-2 text-center">
+            <h1 className="text-xl font-bold">Seneste fangst</h1>
+          </div>
+          <SenesteFangst />
+        </div>
       </div>
     </div>
   );
