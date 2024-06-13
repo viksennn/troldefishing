@@ -68,7 +68,7 @@ const SenesteFangst: React.FC = () => {
   );
 
   return (
-    <div className='flex gap-10 items-center border p-5 rounded w-[500px] h-[350px] justify-between'>
+    <div className='flex lg:flex-row flex-col gap-10 items-center border p-5 rounded lg:w-[500px] lg:h-[350px] w-screen justify-between'>
       <div>
         <div className='flex flex-col gap-3'>
             <p className='text-xl font-bold'>{latestCatch.fisherman}</p>
