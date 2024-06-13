@@ -14,13 +14,14 @@ export const fiskeArterData = [
 
 export const fiskeLokationerData = [
     "Sinding",
+    "Herning",
     "Borris",
     "Stauning",
     "Troldhede",
     "Karup Å",
     "Fårup",
     "Limfjorden",
-    "Bovbjerg"
+    "Bovbjerg",
 ]
 
 export const fiskeAgnData = [
