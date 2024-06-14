@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { fiskeAgnData, fiskeArterData, fiskeLokationerData } from "@/app/data/fiskefangst";
 import { UploadButton } from "../uploadthing/uploadthing";
+import { Input } from "@/components/ui/input";
 
 const FormSchema = z.object({
     art: z
@@ -131,20 +132,9 @@ export const FiskeOpretKnap = ({label, slug}: any) => {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Lokation</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Vælg lokation" />
-                                                </SelectTrigger>
+                                                <Input {...field} placeholder="Hvor fangede du banditten?" />
                                             </FormControl>
-                                            <SelectContent>
-                                                {fiskeLokationerData.map((loka) => (
-                                                    <SelectItem key={loka} value={loka}>
-                                                        {loka}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
                                         <FormMessage />
                                     </FormItem>
                                 )}
@@ -155,20 +145,9 @@ export const FiskeOpretKnap = ({label, slug}: any) => {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Agn</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Vælg agn" />
-                                                </SelectTrigger>
+                                                <Input {...field} placeholder="Hvilket agn brugte du?" />
                                             </FormControl>
-                                            <SelectContent>
-                                                {fiskeAgnData.map((agn) => (
-                                                    <SelectItem key={agn} value={agn}>
-                                                        {agn}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
                                         <FormMessage />
                                     </FormItem>
                                 )}
