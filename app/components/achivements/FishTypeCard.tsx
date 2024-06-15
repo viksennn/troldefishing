@@ -26,7 +26,7 @@ export const FishTypeCard = ({ data }: any) => {
             fishImg = "/ach/skalle.png";
             break;
         default:
-            // Hvis fisketype ikke matcher nogen kendte typer, kan du vælge at vise et standardbillede eller ingen billede
+            fishImg = "/ach/defaultfisk.png"
             break;
     }
 

@@ -152,7 +152,7 @@ export const AchivementList = (achdata: { data: any, variant: string }) => {
         fanget5Ørreder && generateTooltip({
             label: "Fanget 5 Regnbue Ørreder", title: "Ørred Pro", src: "/ach/rainbow-trout5.png",
             variant: achdata.variant,
-            border: ""
+            border: "pro"
         }),
         fangetAborre && generateTooltip({
             label: "Fanget sin første Aborre", title: "", src: "/ach/aborre.png",
