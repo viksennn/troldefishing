@@ -15,7 +15,11 @@ const generateTooltip = (achivementData: { label: string, src: string, title: st
         return (
             <TooltipProvider key={achivementData.label}>
                 <Tooltip>
-                    <TooltipTrigger className="mr-2 p-2 bg-gray-100 rounded hover:cursor-help">
+                    <TooltipTrigger className={`mr-2 p-2 bg-gray-100 rounded hover:cursor-help
+                        
+                        ${achivementData.border === "pro" ? "border-2 border-animate duration-7000 ease-in-out" : "border"}
+                        
+                        `}>
                         <img draggable={false} src={achivementData.src} width={50} alt={achivementData.label} />
                     </TooltipTrigger>
                     <TooltipContent>
@@ -152,7 +156,7 @@ export const AchivementList = (achdata: { data: any, variant: string }) => {
         fanget5Ørreder && generateTooltip({
             label: "Fanget 5 Regnbue Ørreder", title: "Ørred Pro", src: "/ach/rainbow-trout5.png",
             variant: achdata.variant,
-            border: ""
+            border: "pro"
         }),
         fangetAborre && generateTooltip({
             label: "Fanget sin første Aborre", title: "", src: "/ach/aborre.png",
