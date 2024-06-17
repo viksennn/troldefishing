@@ -40,6 +40,8 @@ const SenesteFangst: React.FC = () => {
         const res = await fetch(url, { cache: "no-store" }); // Tilpas URL'en til din API-endpoint
         const data: Person[] = await res.json();
 
+        const dataLength = data.length;
+
         if (data.length > 0) {
           // Samler alle fiskeData med fiskerens navn i én liste
           const allCatches: CatchWithFisher[] = data.flatMap(person => 

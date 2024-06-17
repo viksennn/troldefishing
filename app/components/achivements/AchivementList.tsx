@@ -15,7 +15,11 @@ const generateTooltip = (achivementData: { label: string, src: string, title: st
         return (
             <TooltipProvider key={achivementData.label}>
                 <Tooltip>
-                    <TooltipTrigger className="mr-2 p-2 bg-gray-100 rounded hover:cursor-help">
+                    <TooltipTrigger className={`mr-2 p-2 bg-gray-100 rounded hover:cursor-help
+                        
+                        ${achivementData.border === "pro" ? "border-2 border-animate duration-7000 ease-in-out" : "border"}
+                        
+                        `}>
                         <img draggable={false} src={achivementData.src} width={50} alt={achivementData.label} />
                     </TooltipTrigger>
                     <TooltipContent>

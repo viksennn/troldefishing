@@ -6,13 +6,13 @@
 
     @keyframes border-rotate {
       0% {
-          border-color: rgb(0, 0, 175);
+          border-color: rgb(255, 234, 0);
       }
       50% {
-          border-color: rgb(107, 0, 173);
+          border-color: rgb(255, 204, 0);
       }
       100% {
-          border-color: rgb(0, 0, 175);
+        border-color: rgb(255, 234, 0);
       }
   }
   
