@@ -31,7 +31,7 @@ const generateTooltip = (achivementData: { label: string, src: string, title: st
     } else if (achivementData.variant === "stor") {
 
         return (
-            <div className={`bg-gray-100 w-[120px] lg:w-[150px] p-2 rounded-md flex flex-col items-center gap-2
+            <div className={`bg-gray-100 w-[100px] lg:w-[150px] p-2 rounded-md flex flex-col items-center gap-2
             
             ${achivementData.border === "pro" ? "border-2 border-animate duration-7000 ease-in-out" : "border"}
             
