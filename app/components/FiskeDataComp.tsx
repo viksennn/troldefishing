@@ -12,7 +12,7 @@ export const FiskeDataComp = ({data, variant}:any) => {
     
         return (
             <div>
-                <div className="flex lg:gap-5 flex-wrap px-5 flex-row-reverse justify-end">
+                <div className="flex lg:gap-5 flex-wrap px-5 justify-start">
                     {data.fiskeData.map((fisk:any) => {
                         return (
                             <FiskCardProfile user={data._id} key={fisk._id} data={fisk} />
@@ -24,7 +24,7 @@ export const FiskeDataComp = ({data, variant}:any) => {
     } else if (variant === "fisker") {
         return (
             <div>
-            <div className="flex gap-2 lg:gap-5 flex-wrap px-5 flex-row-reverse justify-end">
+            <div className="flex gap-2 lg:gap-5 flex-wrap-reverse px-5 justify-start">
                 {data.fiskeData.map((fisk:any) => {
                     return (
                         <FiskCard user={data._id} key={fisk._id} data={fisk} />
