@@ -151,7 +151,7 @@ export const AchivementList = (achdata: { data: any, variant: string }) => {
         fanget10Ørreder && generateTooltip({
             label: "Fanget 10 Regnbue Ørreder", title: "Ørred Master", src: "/ach/rainbow-trout10.png",
             variant: achdata.variant,
-            border: ""
+            border: "pro"
         }),
         fanget5Ørreder && generateTooltip({
             label: "Fanget 5 Regnbue Ørreder", title: "Ørred Pro", src: "/ach/rainbow-trout5.png",
@@ -197,7 +197,7 @@ export const AchivementList = (achdata: { data: any, variant: string }) => {
 
     if (fiskeData.length > 0) {
         return (
-            <CollapsibleAchievements achievements={allAchievements} gapSize={gapSize} />
+            <CollapsibleAchievements achievements={allAchievements} gapSize={gapSize} achdata={achdata} />
         );
     } else if (fiskeData.length <= 0 && achdata.variant === "stor") {
         return (
@@ -208,7 +208,7 @@ export const AchivementList = (achdata: { data: any, variant: string }) => {
     }
 };
 
-const CollapsibleAchievements = ({ achievements, gapSize }: { achievements: React.ReactNode[], gapSize: number }) => {
+const CollapsibleAchievements = ({ achievements, gapSize, achdata }: { achievements: React.ReactNode[], gapSize: number, achdata: any }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
 
@@ -231,7 +231,7 @@ const CollapsibleAchievements = ({ achievements, gapSize }: { achievements: Reac
             <div className={`w-full flex flex-wrap mt-5 gap-2 lg:gap-${gapSize}`}>
                 {visibleAchievements}
             </div>
-            {isSmallScreen && achievements.length > 3 && (
+        {isSmallScreen && achievements.length > 3 &&  achdata.variant === "stor" && (
                 <button
                     className="mt-2 text-blue-500 flex items-center gap-1 bg-gray-200 py-2 px-5 rounded"
                     onClick={() => setIsExpanded(!isExpanded)}
@@ -239,7 +239,18 @@ const CollapsibleAchievements = ({ achievements, gapSize }: { achievements: Reac
                     {isExpanded ? <IoClose size={25} /> : <FaSort size={15}/> }
                     {isExpanded ? "Vis færre" : "Vis flere"}
                 </button>
-            )}
+        )}
+        {isSmallScreen && achievements.length > 3 &&  achdata.variant === "lille" && ( 
+            <div className="w-full text-center">
+                <button
+                    className="mt-2 text-blue-500 flex items-center gap-1 bg-gray-200 py-1 px-2 text-sm rounded"
+                    onClick={() => setIsExpanded(!isExpanded)}
+                >
+                {isExpanded ? <IoClose size={25} /> : <FaSort size={15}/> }
+                {isExpanded ? "Vis færre" : "Vis flere"}
+            </button>
+            </div>
+        )}
         </div>
     );
 };
