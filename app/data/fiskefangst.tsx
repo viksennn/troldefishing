@@ -9,6 +9,7 @@ export const fiskeArterData = [
     "Bækørred",
     "Havørred",
     "Skalle",
+    "Rødspætte",
     "Brasen"
 ]
 
