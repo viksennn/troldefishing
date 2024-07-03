@@ -10,7 +10,9 @@ export const fiskeArterData = [
     "Havørred",
     "Skalle",
     "Rødspætte",
-    "Brasen"
+    "Brasen",
+    "Comber",
+    "Large-eye dentex"
 ]
 
 export const fiskeLokationerData = [
