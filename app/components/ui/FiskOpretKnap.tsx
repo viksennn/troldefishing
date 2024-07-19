@@ -192,12 +192,12 @@ export const FiskeOpretKnap = ({label, slug}: any) => {
                                     </FormItem>
                                 )}
                             />
-                                <div className="flex flex-col items-start">
+                                <div className="flex flex-col items-center">
                                     <UploadButton
                                     className="ut-button:bg-black"
                                       content={{
                                         button({ ready }) {
-                                          if (ready) return <div>Upload billede</div>;
+                                          if (ready) return <div className="z-10">Upload billede</div>;
                                      
                                           return "Gør klar...";
                                         },
@@ -219,9 +219,10 @@ export const FiskeOpretKnap = ({label, slug}: any) => {
                                             alert(`ERROR! ${error.message}`);
                                             }}
                                         />
-                                        {uploadComplete && <p className="mt-2 text-sm text-green-500 font-semibold">Billedet er blevet uploadet</p>}
                                  </div>
-                            <Button type="submit">Færdig</Button>
+                                 {imgUrl && <img src={imgUrl} alt="fisk" className="w-1/3 max-h-64 object-cover rounded-md mx-auto" />}
+                                 {uploadComplete && <p className="mt-2 text-sm text-center font-semibold">Billedet er blevet uploadet</p>}
+                            <Button type="submit">Opret fangst</Button>
                         </form>
                     </Form>
 

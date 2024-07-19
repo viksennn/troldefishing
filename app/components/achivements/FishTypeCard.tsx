@@ -1,7 +1,7 @@
-export const FishTypeCard = ({ data }: any) => {
+export const FishTypeCard = ({art, className}: any) => {
 
     let fishImg = "";
-    const fishType = data.art;
+    const fishType = art;
 
     switch (fishType) {
         case "Regnbue Ørred":
@@ -32,7 +32,7 @@ export const FishTypeCard = ({ data }: any) => {
 
     return (
         <div>
-            <img draggable={false} src={fishImg} alt="fish" className="w-[65px] object-cover lg:w-[80px]" />
+            <img draggable={false} src={fishImg} alt="fish" className={className} />
         </div>
     );
 }

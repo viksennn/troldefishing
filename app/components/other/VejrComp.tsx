@@ -20,12 +20,11 @@ export const VejrComp = async () => {
     ]
 
     return (
-        <div className="flex gap-5 border px-5 py-10 rounded">
-            <div className="flex flex justify-center items-center gap-3">
+        <div className="flex gap-2 border py-1 px-1 rounded-lg">
+            <div className="flex justify-center items-center">
                 <img draggable={false} src={data.current.condition.icon} alt="weather icon" className="h-10"/>
-                <p className="text-xl">{data.location.name}</p>
             </div>
-            <div className="flex gap-10 p-3 roundedborder-2 items-center justify-center">
+            <div className="flex gap-2 p-3 roundedborder-2 items-center justify-center">
                 {tempData.map(temp => {
                     return (
                         <div key={temp.name} className="flex items-center gap-1">

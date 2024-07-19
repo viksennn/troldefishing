@@ -6,7 +6,6 @@ const fishingStatsData = new mongoose.Schema({
     agn: String,
     dato: String,
     imgUrl: String,
-    imgKey: String,
 });
 
 const fishingStats = new mongoose.Schema({
@@ -22,15 +21,77 @@ const fishingStats = new mongoose.Schema({
         type: [fishingStatsData],
         required: true,
     },
+    profilImgUrl: {
+        type: String,
+        required: true,
+    },
+    posts: {
+        type: Array,
+        required: true,
+        ref: 'Posts',
+    }
   }, { collection: 'FishingData' });
 
 export const FishingModel = mongoose.models.FishingData || mongoose.model('FishingData', fishingStats);
 
+const postSchema = new mongoose.Schema({
+    content: {
+        type: String,
+        required: true,
+    },
+    userId: {
+        type: String,
+        required: true,
+        ref: 'FishingData'
+    },
+    kommentarer: {
+        type: Array,
+        ref: 'Comments'
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 
-const adminFiskeData = new mongoose.Schema({
-    adminSettingName: String,
-    fiskeArter: [String],
-}, { collection: 'AdminData' });
+}, { collection: 'Posts' });
 
-export const AdminFiskeModel = mongoose.models.AdminFiskeData || mongoose.model('AdminFiskeData', adminFiskeData);
+export const PostModel = mongoose.models.Posts || mongoose.model('Posts', postSchema);
 
+const commentSchema = new mongoose.Schema({
+    content: {
+        type: String,
+        required: true,
+    },
+    userId: {
+        type: String,
+        required: true,
+        ref: 'FishingData'
+    },
+    postId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Posts'
+    },
+}, { collection: 'Comments' });
+
+const mediaSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        required: true,
+    },
+    url: {
+        type: String,
+        required: true,
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'FishingData'
+    },
+    refId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Posts'
+    },
+}, { collection: 'Media' });
+
+export const MediaModel = mongoose.models.Media || mongoose.model('Media', mediaSchema);

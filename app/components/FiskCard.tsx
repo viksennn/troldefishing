@@ -52,6 +52,8 @@ const FormSchema = z.object({
 
         const date = new Date(data.dato);
 
+        const fiskeArt = data.art;
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -107,7 +109,7 @@ const FormSchema = z.object({
     return (
         <div className="p-3 border rounded w-full lg:w-[400px] mt-3 flex lg:flex-row mb-8">
             <div className="flex items-center justify-center mr-5">
-                <FishTypeCard data={data}/>
+                <FishTypeCard art={data.art}/>
             </div>
             <div className="flex justify-between w-full">
                 <div className="">

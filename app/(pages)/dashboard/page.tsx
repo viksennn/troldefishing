@@ -1,39 +1,34 @@
+import { MainFeed } from "@/app/components/Feed/MainFeed";
 import SenesteFangst from "@/app/components/SenesteFangst";
-import { VejrComp } from "@/app/components/other/VejrComp";
-import UserHello from "@/app/components/ui/UserHello";
+import { connectMongo } from "@/app/data/mongodb";
+import { MediaModel } from "@/app/data/mongoFishingModel";
 import Link from "next/link";
-import { GiCampfire, GiLuckyFisherman } from "react-icons/gi";
+
+
 
 export default function Home() {
 
-  const iconSize = 35;
-
-  const links = [
-    { name: "Fiskerne", path: "/fiskerne", icon: <GiLuckyFisherman size={iconSize} /> },
-    {name: "Min Profil", path: "/min-profil", icon: <GiCampfire size={iconSize} />},
-  ]
-
   return (
-    <div className="flex lg:flex-row flex-col items-center justify-center lg:h-[80vh] gap-10 lg:gap-0">
-      <div className="flex flex-col m-10 gap-10 justify-between h-[300px]">
-        <div className="flex flex-col gap-5 items-center">
-          <VejrComp />
+    <div className="p-2 flex flex-col lg:flex-row gap-8 m-0 lg:m-8">
+      <div className="lg:1/3">
+        <div className='w-full mb-4 flex items-center gap-2 justify-between pr-5'>
+          <p className='text-lg font-bold bg-indigo-500 w-fit py-0.5 px-1 rounded text-white drop-shadow-md'>Seneste Fangst</p>
+          <Link href='/seneste-fangster' className='text-indigo-700 text-sm'>Se alle seneste fangster</Link>
         </div>
-        <div className="flex flex-col gap-5">
-          {links.map(link => (
-            <Link key={link.name} href={link.path} className="flex h-[55px] gap-2 items-center justify-center bg-indigo-400 text-white py-1 px-2 rounded">
-              {link.icon}
-              {link.name}
-            </Link>
-          ))}
-        </div>
+        <SenesteFangst />
       </div>
-      <div>
-        <div>
-          <div className="mb-2 text-center">
-            <h1 className="text-xl font-bold">Seneste fangst</h1>
-          </div>
-          <SenesteFangst />
+      <div className="w-full lg:w-1/3">
+        <div className='w-full mb-4'>
+            <p className='text-lg font-bold bg-indigo-500 w-fit py-0.5 px-1 rounded text-white drop-shadow-md'>Fiske feed</p>
+        </div>
+        <MainFeed />
+      </div>
+      <div className="w-full lg:w-1/3">
+        <div className='w-full mb-4'>
+            <p className='text-lg font-bold bg-indigo-500 w-fit py-0.5 px-1 rounded text-white drop-shadow-md'>Catch of the Week</p>
+        </div>
+        <div className="border lg:h-[500px] rounded-lg flex-col flex items-center justify-center">
+          <p className="text-sm">Kommer snart...</p>
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import { PAGE_URL } from "@/app/url";
 import { authOptions } from "@/lib/authOptions";
 import { IFisher } from "@/types/IFisher";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 
 export default async function Home() {
 
@@ -51,7 +52,7 @@ export default async function Home() {
             </div>
             <div className="flex items-center m-10 justify-center text-lg lg:justify-start gap-5">
                 <p className="font-bold text-lg">Fangster</p>
-                <FiskeOpretKnap slug={userId} label={"Opret fisk"}/>
+                <Link href="/opret-fangst">Opret Fangst</Link>
             </div>
             <div className="m-5">
                 <FiskeDataComp variant="profil" data={data} />

@@ -112,7 +112,7 @@ const FormSchema = z.object({
     return (
         <div className="p-3 border rounded w-full lg:w-[400px] mt-3 flex flex-row mb-8">
             <div className="flex items-center justify-center mr-5">
-                <FishTypeCard data={data}/>
+                <FishTypeCard art={data.art}/>
             </div>
             <div className="flex justify-between w-full">
                 <div className="">
