@@ -39,9 +39,9 @@ export async function deletePost(postId: string) {
     }
 
     
-    const mediaItem = await MediaModel.find({ postId: post._id });
+    const mediaItem = await MediaModel.find({ refId: post._id });
     
-    await MediaModel.deleteMany({ postId: post._id });
+    await MediaModel.deleteMany({ refId: post._id });
     
     await post.deleteOne();
 

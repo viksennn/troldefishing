@@ -90,7 +90,8 @@ const mediaSchema = new mongoose.Schema({
     },
     refId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Posts'
+        ref: 'Posts',
+        required: true,
     },
 }, { collection: 'Media' });
 

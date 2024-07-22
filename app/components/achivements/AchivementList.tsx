@@ -153,10 +153,15 @@ export const AchivementList = (achdata: { data: any, variant: string }) => {
             variant: achdata.variant,
             border: "pro"
         }),
-        fanget5Ørreder && generateTooltip({
+        !fanget10Ørreder && fanget5Ørreder && generateTooltip({
             label: "Fanget 5 Regnbue Ørreder", title: "Ørred Pro", src: "/ach/rainbow-trout5.png",
             variant: achdata.variant,
             border: "pro"
+        }),
+        !fanget5Ørreder && fangetØrred && generateTooltip({
+            label: "Fanget sin første Ørred", title: "", src: "/ach/rainbow-trout.png",
+            variant: achdata.variant,
+            border: ""
         }),
         fangetAborre && generateTooltip({
             label: "Fanget sin første Aborre", title: "", src: "/ach/aborre.png",
@@ -165,11 +170,6 @@ export const AchivementList = (achdata: { data: any, variant: string }) => {
         }),
         fangetGedde && generateTooltip({
             label: "Fanget sin første Gedde", title: "", src: "/ach/pike.png",
-            variant: achdata.variant,
-            border: ""
-        }),
-        fangetØrred && generateTooltip({
-            label: "Fanget sin første Ørred", title: "", src: "/ach/rainbow-trout.png",
             variant: achdata.variant,
             border: ""
         }),
@@ -254,4 +254,3 @@ const CollapsibleAchievements = ({ achievements, gapSize, achdata }: { achieveme
         </div>
     );
 };
-

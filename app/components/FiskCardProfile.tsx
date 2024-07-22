@@ -112,7 +112,7 @@ const FormSchema = z.object({
     return (
         <div className="p-3 border rounded w-full lg:w-[400px] mt-3 flex flex-row mb-8">
             <div className="flex items-center justify-center mr-5">
-                <FishTypeCard art={data.art}/>
+                <FishTypeCard art={data.art} className={"h-36 object-contain"}/>
             </div>
             <div className="flex justify-between w-full">
                 <div className="">
@@ -125,137 +125,6 @@ const FormSchema = z.object({
                     
                 </div>
                 <div className="flex flex-col lg:justify-end gap-10 items-center mt-8 lg:mt-2 lg:gap-2">
-                <Dialog onOpenChange={setIsOpen} open={isOpen}>
-                        <DialogTrigger><FaPen className="w-6 h-6 lg:w-4 lg:h-4" /></DialogTrigger>
-                    <DialogContent>
-                        <DialogHeader>
-                            <DialogTitle>Redigere fangst</DialogTitle>
-                        </DialogHeader>
-                        
-                            <Form {...form}>
-                                <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
-                                    <FormField
-                                    control={form.control}
-                                    name="art"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                        <FormLabel>Fiske Art</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder={"test"} />
-                                            </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {fiskeArterData.map((fisk) => (
-                                                    <SelectItem key={fisk} value={fisk}>
-                                                        {fisk}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                        <FormMessage />
-                                        </FormItem>
-                                    )}
-                                    
-                                    />
-                                    <FormField
-                                    control={form.control}
-                                    name="lokation"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                        <FormLabel>Lokation</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="" />
-                                            </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {fiskeLokationerData.map((loka) => (
-                                                    <SelectItem key={loka} value={loka}>
-                                                        {loka}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                        <FormMessage />
-                                        </FormItem>
-                                    )}
-                                    
-                                    />
-                                    <FormField
-                                    control={form.control}
-                                    name="agn"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                        <FormLabel>Agn</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="" />
-                                            </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {fiskeAgnData.map((agn) => (
-                                                    <SelectItem key={agn} value={agn}>
-                                                        {agn}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                        <FormMessage />
-                                        </FormItem>
-                                    )}
-                                    
-                                    />
-                                    <FormField
-                                            control={form.control}
-                                            name="dato"
-                                            render={({ field }) => (
-                                                <FormItem className="flex flex-col">
-                                                <FormLabel>Dato for fangst</FormLabel>
-                                                <Popover>
-                                                    <PopoverTrigger asChild>
-                                                    <FormControl>
-                                                        <Button
-                                                        variant={"outline"}
-                                                        className={cn(
-                                                            "w-full pl-3 text-left font-normal",
-                                                            !field.value && "text-muted-foreground"
-                                                        )}
-                                                        >
-                                                        {field.value ? (
-                                                            format(new Date(field.value), "dd-MM-yyyy")
-                                                        ) : (
-                                                            <span className="text-black">DATO</span>
-                                                        )}
-                                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-80" />
-                                                        </Button>
-                                                    </FormControl>
-                                                    </PopoverTrigger>
-                                                    <PopoverContent className="w-auto p-0" align="start">
-                                                    <Calendar
-                                                        mode="single"
-                                                        selected={field.value}
-                                                        onSelect={field.onChange}
-                                                        disabled={(date) =>
-                                                        date > new Date() || date < new Date("1900-01-01")
-                                                        }
-                                                        initialFocus
-                                                    />
-                                                    </PopoverContent>
-                                                </Popover>
-                                                <FormMessage />
-                                                </FormItem>
-                                            )}
-                                            />
-                                    <Button type="submit">Færdig</Button>
-                                </form>
-                            </Form>
-
-                    </DialogContent>
-                </Dialog>
                     <Popover>
                         <PopoverTrigger><TbFishBone className="w-8 h-8 lg:w-6 lg:h-6" /></PopoverTrigger>
                         <PopoverContent className="flex flex-col justify-center items-center gap-3">

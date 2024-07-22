@@ -119,7 +119,7 @@ export async function createPost({content, mediaId}: CreatePostArgs)  {
     await postItem.save();
 
     if (mediaId) {
-        await MediaModel.findByIdAndUpdate(mediaId, { postId: postItem._id });
+        await MediaModel.findByIdAndUpdate(mediaId, { refId: postItem._id });
     }
 
     revalidatePath("/dashboard");

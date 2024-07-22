@@ -15,6 +15,10 @@ import { CalendarIcon } from "lucide-react"
 import { Label } from "@/components/ui/label"
 import { FaFileImage } from "react-icons/fa6"
 import { toast } from "@/components/ui/use-toast"
+import { FiskCard } from "@/app/components/FiskCard"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+
+import {AnimatePresence, motion} from "framer-motion"
 
 export const OpretFangst = () => {
 
@@ -26,11 +30,12 @@ export const OpretFangst = () => {
 
     const [date, setDate] = useState<Date>()
 
+    const formattedDate = date ? format(date, "dd/MM/yyyy"): "N/A";
+
     const maxFileSize = 1024 * 1024 * 5; // 5MB
     
     const fiskeartOnChange = (value: string) => {
         setFiskeart(value);
-        console.log(value);
     }
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,24 +68,30 @@ export const OpretFangst = () => {
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        return null;   
+        e.preventDefault();
+        
+        
     }
 
     return (
-        <form className="w-full mt-12 flex items-center">
-            <div className="flex flex-col w-1/2 m-5">
-                <div className="w-1/2">
-                    <div className="mb-4 w-full">
-                        <p className="text-sm mb-2">Hvad er det for en fisk?</p>
+
+        <form onSubmit={handleSubmit} className="h-screen lg:h-[80vh] w-screen flex flex-col items-center justify-center gap-4 p-2">
+            <p className="text-xl font-bold">Opret din nye fangst</p>
+            <div className="lg:w-[700px] w-full lg:h-[500px]  border rounded-lg p-8 flex lg:flex-row flex-col gap-6 items-center drop">
+                <div className="w-1/3 flex justify-center drop-shadow-md">
+                    <FishTypeCard art={fiskeart} />
+                </div>
+                <div className="w-full lg:w-2/3 flex flex-col gap-2">
+                    <div className="flex lg:flex-row flex-col lg:gap-2 items-center justify-between">
+                        <p className="text-gray-500">Art: </p>
                         <Select onValueChange={fiskeartOnChange}> 
-                            <SelectTrigger>
-                                <SelectValue placeholder="Vælg fisk" />
+                            <SelectTrigger className="w-2/3">
+                                <SelectValue className="text-gray-500 placeholder:text-gray-500" placeholder="Vælg fisk" />
                             </SelectTrigger>
-                            <SelectContent className="overflow-y-auto">
+                            <SelectContent className="">
                                 {fiskeArterData.map((fisk) => (
                                     <SelectItem key={fisk} value={fisk} className="hover:cursor-pointer border-b my-1">
                                         <div className="flex items-center gap-8">
-                                            <FishTypeCard art={fisk} className={"h-16"}/>
                                             <p className="font-bold">{fisk}</p>
                                         </div>
                                     </SelectItem>
@@ -88,48 +99,114 @@ export const OpretFangst = () => {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="mb-4 w-full">
-                        <p className="text-sm mb-2">Hvor har du fanget den?</p>
-                        <Input type="text" placeholder="Lokation"/>
+                    <div className="flex lg:flex-row flex-col lg:gap-2 items-center justify-between">
+                        <p className="text-gray-500">Lokation: </p>
+                        <Input className="w-2/3" placeholder="Lokation" onChange={(e) => setLokation(e.target.value)} />
                     </div>
-                    <div className="mb-4 w-full">
-                        <p className="text-sm mb-2">Hvad fangede du den med?</p>
-                        <Input type="text" placeholder="Agn" />
+                    <div className="flex lg:flex-row flex-col lg:gap-2 items-center justify-between">
+                        <p className="text-gray-500">Fanget med: </p>
+                        <Input className="w-2/3" placeholder="Lokation" onChange={(e) => setAgn(e.target.value)} />
                     </div>
-                </div>
-                <div className="w-1/2">
-                    <div className="flex items-center flex-col mb-4">
-                        <p className="text-sm mb-2">Vælg dato</p>
-                        <Calendar
-                            mode="single"
-                            selected={date}
-                            onSelect={setDate}
-                            className="rounded-md border mx-4"
-                        />
+                    <div className="flex lg:flex-row flex-col lg:gap-2 mt-4 items-center justify-between">
+                        <p className="text-gray-500">Dato: </p>
+                        <div className="flex flex-col gap-2 w-2/3">
+                            <Button className="bg-indigo-500" onClick={() => setDate(new Date())}
+                                type="button"
+                            >
+                                Fanget i dag
+                            </Button>
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        variant={"outline"}
+                                        className={cn(
+                                            "w-full pl-3 text-left font-normal",
+                                            !date && "text-muted-foreground"
+                                        )}
+                                    >
+                                        {date ? (
+                                            format(new Date(date), "dd-MM-yyyy")
+                                        ) : (
+                                            <span className="text-black">Vælge dato</span>
+                                        )}
+                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-80" />
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0" align="start">
+                                    <Calendar
+                                        mode="single"
+                                        selected={date}
+                                        onSelect={setDate}
+                                        disabled={(date) =>
+                                            date > new Date() || date < new Date("1900-01-01")
+                                        }
+                                    />
+                                </PopoverContent>
+                            </Popover>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 mt-4 items-center justify-center lg:justify-between">
+                        <p className="text-gray-500"></p>
+                        <div className="flex flex-col gap-2 w-2/3">
+                            {!fileUrl && (
+                                <label className="flex items-center justify-center rounded-lg h-40 bg-gray-200 cursor-pointer">
+                                    <div className="flex gap-2 items-center">
+                                        <FaFileImage />
+                                        <span className="text-indigo-500">Vælg billede</span>
+                                    </div>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageChange}
+                                        className="hidden"
+                                    />
+                                </label>
+                            )}
+                            {fileUrl && (
+                                <>                                         
+                                    <label className="cursor-pointer absolute h-40 w-[270px] items-center justify-center hover:backdrop-blur-sm transition-all">
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleImageChange}
+                                            className="hidden"
+                                        />
+                                    </label>
+                                    <motion.img
+                                        src={fileUrl}
+                                        alt="Billede"
+                                        className="w-full h-40 object-cover rounded-lg"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                    />
+                                </>
+                            )}
+                            <div className="h-4">
+                                {file && (
+                                    <button 
+                                            onClick={() => {
+                                                setFile(undefined);
+                                                setFileUrl(undefined);
+                                            }}
+                                            className="text-xs text-red-600 w-full"
+                                        >
+                                            Fjern billede
+                                        </button>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="w-1/2 flex items-center justify-center flex-col">
-                    {!fileUrl && !file && (
-                    <>
-                        <p className="text-sm mb-2">Vælg billede</p>
-                        <div className="flex">
-                            <Label htmlFor="picture" className=" bg-black p-6 rounded-md hover:cursor-pointer"><FaFileImage size={35} className="text-white"/></Label>
-                            <Input id="picture" type="file" onChange={handleImageChange} className="hidden" accept="image/jpeg,image/jpg,image/png,image/webp,image/gif,video/mp4,video/webm" />
-                        </div>
-                    </>
-                    )}
-                    {fileUrl && file && (
-                    <div className="flex flex-col items-center">
-                        <img src={fileUrl} alt={file.name} className="w-[500px] object-cover rounded-lg" />
-                        <Button onClick={() => {
-                            setFile(undefined)
-                            setFileUrl(undefined)
-                        }} variant="destructive" className="mt-2">Fjern billede</Button>
-                    </div>
-                    )}
+            <div className="h-12 flex w-full flex-col items-center justify-center">
+                <Button
+                    disabled={!fiskeart || !lokation || !agn || !date}
+                    type="submit"
+                >
+                    Opret Fangst
+                </Button>
             </div>
         </form>
     )
-
 }
