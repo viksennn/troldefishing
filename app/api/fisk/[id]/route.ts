@@ -13,9 +13,9 @@ export async function GET(req:any, {params}:any) {
 
 export async function PUT(req:any, {params}:any ) {
     const {id} = params;
-    const {navn} = await req.json();
+    const {navn, profilImgUrl} = await req.json();
     await connectMongo();
-    await FishingModel.findByIdAndUpdate(id, {navn});
+    await FishingModel.findByIdAndUpdate(id, {navn, profilImgUrl});
     return NextResponse.json({ message: "Fisk opdateret" }, {status: 200});
 }
 
@@ -31,7 +31,6 @@ export async function POST(req: any, {params}:any) {
         lokation: lokation,
         dato: dato,
         imgUrl: imgUrl,
-        imgKey: imgKey
     }
     
     try {

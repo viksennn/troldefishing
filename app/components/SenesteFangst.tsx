@@ -4,6 +4,7 @@ import { PAGE_URL } from '../url';
 import { FiskeBillede } from './ui/FiskeBillede';
 import { FaFish } from 'react-icons/fa6';
 import Link from 'next/link';
+import { FishTypeCard } from './achivements/FishTypeCard';
 
 interface FiskeData {
   art: string;
@@ -80,7 +81,8 @@ const SenesteFangst: React.FC = () => {
                 <Link href={`/fiskerne/${latestCatch.id}`} className='text-xl font-bold hover:underline'>
                   {latestCatch.fisherman}
                 </Link>
-                <p>En {latestCatch.catch.art} ved {latestCatch.catch.lokation}. <br/> Fanget på {latestCatch.catch.agn}.</p>
+                <FishTypeCard art={latestCatch.catch.art} className="h-8"/>
+                <p>En <span className='font-semibold'>{latestCatch.catch.art}</span> ved {latestCatch.catch.lokation}. <br/> Fanget på {latestCatch.catch.agn}.</p>
                 <p className='text-sm'>Dato: {new Date(latestCatch.catch.dato).toLocaleDateString('da-DK', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
               </div>
             </div>

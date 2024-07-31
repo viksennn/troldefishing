@@ -1,11 +1,19 @@
 import mongoose from "mongoose";
 
-const fishingStatsData = new mongoose.Schema({
+const fishingStatsDataNew = new mongoose.Schema({
     art: String,
     lokation: String,
     agn: String,
     dato: String,
-    imgUrl: String,
+    imgUrl: {
+        type: String,
+        default: null,
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 const fishingStats = new mongoose.Schema({
@@ -18,18 +26,13 @@ const fishingStats = new mongoose.Schema({
         required: true,
     },
     fiskeData: {
-        type: [fishingStatsData],
+        type: [fishingStatsDataNew],
         required: true,
     },
     profilImgUrl: {
         type: String,
         required: true,
     },
-    posts: {
-        type: Array,
-        required: true,
-        ref: 'Posts',
-    }
   }, { collection: 'FishingData' });
 
 export const FishingModel = mongoose.models.FishingData || mongoose.model('FishingData', fishingStats);
@@ -90,8 +93,7 @@ const mediaSchema = new mongoose.Schema({
     },
     refId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Posts',
-        required: true,
+        ref: 'Posts, FishingData'
     },
 }, { collection: 'Media' });
 

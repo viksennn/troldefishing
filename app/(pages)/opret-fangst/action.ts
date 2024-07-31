@@ -10,12 +10,11 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import crypto from "crypto";
 
 import mongoose from "mongoose";
-import { MediaModel, PostModel } from "@/app/data/mongoFishingModel";
+import { FishingModel, MediaModel, PostModel } from "@/app/data/mongoFishingModel";
 import { connectMongo } from "@/app/data/mongodb";
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { create } from "domain";
 
 const generateFilename = (byes = 32) => crypto.randomBytes(byes).toString("hex");
 
@@ -72,26 +71,19 @@ export async function getSignedURL(type: string, size: number, checksum: string)
         expiresIn: 60 
     });
 
-    const mediaResult = await new MediaModel({
-        type: type.startsWith("image") ? "image" : "video",
-        url: signedUrl.split("?")[0],
-        userId: sessionUserId
-    });
-
-    await mediaResult.save();
-
-    return { success: { url: signedUrl, mediaId: mediaResult._id } };
+    return { success: { url: signedUrl}};
     
 }
 
 type CreatePostArgs = {
-    content: string;
-    mediaId?: string;
-    sessionUserId: string;
+    art: string;
+    lokation: string;
+    agn: string;
+    dato: Date;
+    imgUrl?: string;
 }
 
-export async function createPost({content, mediaId}: CreatePostArgs)  {
-
+export async function createFangst({ art, lokation, agn, dato, imgUrl }: CreatePostArgs) {
     const session = await getServerSession(authOptions);
     const sessionUserId = session?.user.id as string;
 
@@ -99,29 +91,24 @@ export async function createPost({content, mediaId}: CreatePostArgs)  {
         throw new Error("Not authenticated");
     }
 
-    if (mediaId) {
-        const mediaItem = await MediaModel.findById(mediaId);
-
-        if (!mediaItem) {
-            return { failure: "Invalid media ID" };
-        }
-    }
-
     await connectMongo();
 
-    const postItem = await new PostModel({
-        content,
-        userId: sessionUserId,
-        image: mediaId ? mediaId : undefined,
-        createdAt: new Date(),
-    });
+    const fiskeSet = {
+        art: art,
+        agn: agn,
+        lokation: lokation,
+        dato: dato,
+        imgUrl: imgUrl,
+    };
 
-    await postItem.save();
+    const fangstItem = await FishingModel.findOneAndUpdate(
+        { _id: sessionUserId },
+        { $push: { fiskeData: fiskeSet } },
+        { new: true, useFindAndModify: false }
+    );
 
-    if (mediaId) {
-        await MediaModel.findByIdAndUpdate(mediaId, { refId: postItem._id });
-    }
+    fangstItem.save();
 
-    revalidatePath("/dashboard");
-    redirect("/dashboard");
+    revalidatePath("/min-profil");
+    redirect("/min-profil");
 }

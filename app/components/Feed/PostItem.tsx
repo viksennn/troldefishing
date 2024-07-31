@@ -16,6 +16,8 @@ import {
   } from "@/components/ui/alert-dialog"
 import { deletePost } from './deleteAction';
 import { toast } from '@/components/ui/use-toast';
+import { PAGE_URL } from '@/app/url';
+import Link from 'next/link';
 
 
 type PostItemProps = {
@@ -54,10 +56,18 @@ export const PostItem = ({ data, userData, userId }: PostItemProps) => {
 
     return (
         <div className="w-full border rounded-lg py-4 px-6 my-4">
-            <div className="flex gap-2 items-center">
-                <div className="w-10 h-10 border rounded-full" />
-                <p className="text-lg">{postUser?.navn}</p>
-            </div>
+            {userId === data.userId && (
+                <Link className="flex gap-2 items-center" href={`${PAGE_URL}/min-profil`}>
+                    <img src={postUser?.profilImgUrl} alt="Profil billede" className="w-12 h-12 object-cover rounded-full" />
+                    <p className="text-lg font-bold">{postUser?.navn}</p>
+                </Link>
+            )}
+            {userId !== data.userId && (
+                <Link className="flex gap-2 items-center" href={`${PAGE_URL}/profil/${data.userId}`}>
+                    <img src={postUser?.profilImgUrl} alt="Profil billede" className="w-12 h-12 object-cover rounded-full" />
+                    <p className="text-lg">{postUser?.navn}</p>
+                </Link>
+            )}
             <div className="p-6">
                 <div>{formatContent(data.content)}</div>
             </div>
@@ -95,7 +105,7 @@ type AlertDialogProps = {
 const alertDialog = ({handleDelete, sessionUser, data}: AlertDialogProps) => {
 
     if (sessionUser !== data.userId) {
-        return <p>test</p>
+        return null;
     } else {
         return (
             <div>
@@ -113,7 +123,7 @@ const alertDialog = ({handleDelete, sessionUser, data}: AlertDialogProps) => {
                         </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogCancel>Afbryd</AlertDialogCancel>
                         <AlertDialogAction onClick={handleDelete}>Slet!</AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>

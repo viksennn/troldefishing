@@ -25,6 +25,21 @@ export const FishTypeCard = ({art, className}: any) => {
         case "Skalle":
             fishImg = "/ach/skalle.png";
             break;
+        case "Guld Ørred":
+            fishImg = "/ach/golden-trout.png";
+            break;
+        case "Rødspætte":
+            fishImg = "/ach/fladfisk.png";
+            break;
+        case "Skrubbe":
+            fishImg = "/ach/fladfisk.png";
+            break;
+        case "Bækørred":
+            fishImg = "/ach/browntrout.png";
+            break;
+        case "Comber":
+            fishImg = "/ach/comber.png";
+            break;
         default:
             fishImg = "/ach/defaultfisk.png"
             break;

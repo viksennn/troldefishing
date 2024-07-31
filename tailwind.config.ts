@@ -80,11 +80,33 @@ const config: Config = {
             backgroundPosition: "350% 50%, 350% 50%",
           },
         },
+        'border-rotate-master': {
+          '0%': { borderColor: '#faba4a' },
+          '50%': { borderColor: '#e0a031' },
+          '100%': { borderColor: '#faba4a' },
+        },
+        'border-rotate-king': {
+          '0%': { borderColor: '#33b6c6' },
+          '50%': { borderColor: '#258592' },
+          '100%': { borderColor: '#33b6c6' },
+        },
+        'border-rotate-legend': {
+          '0%': { borderColor: '#4bbd56' },
+          '50%': { borderColor: '#54cf60' },
+          '100%': { borderColor: '#4bbd56' },
+        },
+        'bg-spin': {
+          to: { '--border-angle': '1turn' },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         aurora: "aurora 60s linear infinite",
+        'border-rotate-master': 'border-rotate-master 2s linear infinite',
+        'border-rotate-king': 'border-rotate-king 2s linear infinite',
+        'border-rotate-legend': 'border-rotate-legend 2s linear infinite',
+        'bg-spin': 'bg-spin 3s linear infinite'
       },
     },
   },

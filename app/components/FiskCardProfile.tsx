@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { FishTypeCard } from "./achivements/FishTypeCard";
 import { FiskeBillede } from "./ui/FiskeBillede";
 import { utapi } from "../server/uploadthings";
+import { deleteFangst } from "../(pages)/opret-fangst/deleteAction";
 
 const FormSchema = z.object({
     art: z
@@ -87,17 +88,10 @@ const FormSchema = z.object({
       }
 
     const imgUrl = data.imgUrl;
-    const imgKey = data.imgKey;
 
     const handleDeleteClick = async () => {
-        const url = `${PAGE_URL}/api/fisk/${user}`;
-        await fetch(url, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ fishId: id, imgKey }),
-        });
+        
+        await deleteFangst(id);
 
         router.refresh();
         console.log("slet");

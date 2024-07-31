@@ -19,6 +19,18 @@ import { FiskCard } from "@/app/components/FiskCard"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
 import {AnimatePresence, motion} from "framer-motion"
+import { set } from "mongoose"
+import { createFangst, getSignedURL } from "./action"
+
+const computeSHA256 = async (file: File) => {
+    const buffer = await file.arrayBuffer();
+    const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+    return hashHex;
+  };
 
 export const OpretFangst = () => {
 
@@ -28,9 +40,10 @@ export const OpretFangst = () => {
     const [file, setFile] = useState<File | undefined>(undefined);
     const [fileUrl, setFileUrl] = useState<string | undefined>(undefined);
 
-    const [date, setDate] = useState<Date>()
+    const [date, setDate] = useState<Date>();
 
-    const formattedDate = date ? format(date, "dd/MM/yyyy"): "N/A";
+    const [statusMessage, setStatusMessage] = useState<string | undefined>(undefined);
+
 
     const maxFileSize = 1024 * 1024 * 5; // 5MB
     
@@ -39,6 +52,121 @@ export const OpretFangst = () => {
     }
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        setFile(file)
+
+        if (file && file.size > maxFileSize) {
+            toast({
+                variant: "destructive",
+                title: "Fejl ved upload af billede",
+                description: "Filen er for stor. Maks 5MB!",
+            })
+            setFile(undefined);
+            setFileUrl(undefined);
+
+            return;
+        }
+
+        if (fileUrl) {
+            URL.revokeObjectURL(fileUrl)
+        }
+        
+        if (file) {
+            const url = URL.createObjectURL(file)
+            setFileUrl(url)
+        } else {
+            setFileUrl(undefined)
+        }
+        
+    }
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
+        e.preventDefault();
+
+        setStatusMessage("Indlæser...");
+
+        try {
+
+            if (file) {
+                setStatusMessage("Uploader billede...");
+                const checksum  = await computeSHA256(file);
+                const signedUrlResult = await getSignedURL(file.type, file.size, checksum);
+                if (signedUrlResult.failure !== undefined) {
+                    if (signedUrlResult.failure === "Invalid file type") {
+                        toast({
+                            variant: "destructive",
+                            title: "Fejl ved upload af billede",
+                            description: "Forkert filtype",
+                        })
+                        setStatusMessage("Forkert filtype");
+                        return;
+                    }
+                    if (signedUrlResult.failure === "File too large") {
+                        toast({
+                            variant: "destructive",
+                            title: "Fejl ved upload af billede",
+                            description: "Filen er for stor. Maks 5MB!",
+                        })
+                        setStatusMessage("For stor fil");
+                        return;
+                    } else {
+                        toast({
+                            variant: "destructive",
+                            title: "Ups noget gik galt...",
+                            description: "Spørg Viktor",
+                        })
+                        setStatusMessage("Fejl");
+                    }
+                    console.error(signedUrlResult.failure);
+                    throw(new Error(signedUrlResult.failure));
+                }
+        
+                const {url} = signedUrlResult.success;
+                const s3fileUrl = url.split("?")[0] ?? "hallo";
+        
+                await fetch(url, {
+                    method: "PUT",
+                    body: file,
+                    headers: {
+                        "Content-Type": file?.type
+                    }
+                });
+
+                if (!date) {
+                    toast({
+                        variant: "destructive",
+                        title: "Fejl ved upload af fangst",
+                        description: "Vælg en dato",
+                    })
+                    setStatusMessage("Vælg en dato");
+                    return;
+                }
+            
+                await createFangst({ art: fiskeart, lokation: lokation, agn: agn, dato: date, imgUrl: s3fileUrl});
+            }
+            
+
+
+        } catch (error) {
+            setStatusMessage("Fejl");
+            return;
+        }
+        setStatusMessage("Oprettet");
+
+        setTimeout(() => {
+            setStatusMessage(undefined);
+        }, 2000);
+
+        setFiskeart("");
+        setLokation("");
+        setAgn("");
+        setDate(undefined);
+        setFile(undefined);
+        setFileUrl(undefined);
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         setFile(file)
 
@@ -64,13 +192,7 @@ export const OpretFangst = () => {
         } else {
             setFileUrl(undefined)
         }
-        
-    }
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        
-        
     }
 
     return (
@@ -105,7 +227,7 @@ export const OpretFangst = () => {
                     </div>
                     <div className="flex lg:flex-row flex-col lg:gap-2 items-center justify-between">
                         <p className="text-gray-500">Fanget med: </p>
-                        <Input className="w-2/3" placeholder="Lokation" onChange={(e) => setAgn(e.target.value)} />
+                        <Input className="w-2/3" placeholder="Agn" onChange={(e) => setAgn(e.target.value)} />
                     </div>
                     <div className="flex lg:flex-row flex-col lg:gap-2 mt-4 items-center justify-between">
                         <p className="text-gray-500">Dato: </p>
@@ -199,13 +321,16 @@ export const OpretFangst = () => {
                     </div>
                 </div>
             </div>
-            <div className="h-12 flex w-full flex-col items-center justify-center">
+            <div className="h-4 mt-3 flex w-full flex-col items-center justify-center">
                 <Button
                     disabled={!fiskeart || !lokation || !agn || !date}
                     type="submit"
                 >
                     Opret Fangst
                 </Button>
+            </div>
+            <div>
+                <p className="text-sm">{statusMessage}</p>
             </div>
         </form>
     )

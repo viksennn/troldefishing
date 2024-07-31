@@ -1,19 +1,19 @@
+import { AchivementList } from "@/app/components/achivements/AchivementList";
+import FiskMedals from "@/app/components/fiskeantal/FiskMedals";
 import Link from "next/link"
 import { FC } from "react";
 import { FaArrowRight, FaEye, FaFish } from "react-icons/fa";
-import { AchivementList } from "./achivements/AchivementList";
-import FiskMedals from "./fiskeantal/FiskMedals";
 
-export const ProfileCard = ({data}:any) => {
+export const OwnProfileCard = ({data}:any) => {
 
     const antalFisk = data.fiskeData.length;
 
     const profileUrl = `fiskerne/${data._id}`;
 
     return (
-        <div className="flex flex-col py-6 px-4 mt-2 rounded border gap-3 w-full lg:w-[500px] h-[350px]">
+        <div className="flex flex-col py-6 px-4 mt-2 rounded border-2 border-indigo-100 gap-3 w-full lg:w-[500px] h-[350px]">
             <div className="flex flex-col">
-                <p className="text-xl lg:text-xl">{data.navn}</p>
+                <p className="font-bold text-xl lg:text-xl">{data.navn} <span className="font-normal">(dig)</span></p>
                 <div>
                     <p className="text-sm">Fisk fanget:</p>
                     <div className="flex gap-2 items-center">
@@ -24,9 +24,9 @@ export const ProfileCard = ({data}:any) => {
                 <div>
                     <AchivementList data={data} variant={"lille"}/>
                 </div>
-            </div>
-            <div className="pt-5 text-center lg:text-left">
-                <Link className="text-white p-3 rounded text-sm bg-black" href={profileUrl}>Se fangster</Link>
+                <div className="pt-5 text-center lg:text-left">
+                    <Link href="/min-profil" className="text-white p-3 rounded text-sm bg-black">Min profil</Link>
+                </div>
             </div>
         </div>
     )
