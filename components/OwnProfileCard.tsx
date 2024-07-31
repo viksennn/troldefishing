@@ -11,7 +11,7 @@ export const OwnProfileCard = ({data}:any) => {
     const profileUrl = `fiskerne/${data._id}`;
 
     return (
-        <div className="flex flex-col py-6 px-4 mt-2 rounded border-2 border-indigo-100 gap-3 w-full lg:w-[500px] h-[350px]">
+        <div className="flex flex-col py-6 px-4 mt-2 rounded border-2 border-indigo-100 gap-3 w-full lg:w-[500px] h-[375px]">
             <div className="flex flex-col">
                 <p className="font-bold text-xl lg:text-xl">{data.navn} <span className="font-normal">(dig)</span></p>
                 <div>

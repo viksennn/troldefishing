@@ -18,6 +18,7 @@ import { deletePost } from './deleteAction';
 import { toast } from '@/components/ui/use-toast';
 import { PAGE_URL } from '@/app/url';
 import Link from 'next/link';
+import { Avatar } from '@/components/Avatar';
 
 
 type PostItemProps = {
@@ -58,13 +59,13 @@ export const PostItem = ({ data, userData, userId }: PostItemProps) => {
         <div className="w-full border rounded-lg py-4 px-6 my-4">
             {userId === data.userId && (
                 <Link className="flex gap-2 items-center" href={`${PAGE_URL}/min-profil`}>
-                    <img src={postUser?.profilImgUrl} alt="Profil billede" className="w-12 h-12 object-cover rounded-full" />
+                    <Avatar profilImgUrl={postUser?.profilImgUrl} />
                     <p className="text-lg font-bold">{postUser?.navn}</p>
                 </Link>
             )}
             {userId !== data.userId && (
-                <Link className="flex gap-2 items-center" href={`${PAGE_URL}/profil/${data.userId}`}>
-                    <img src={postUser?.profilImgUrl} alt="Profil billede" className="w-12 h-12 object-cover rounded-full" />
+                <Link className="flex gap-2 items-center" href={`${PAGE_URL}/fiskerne/${data.userId}`}>
+                    <Avatar profilImgUrl={postUser?.profilImgUrl} />
                     <p className="text-lg">{postUser?.navn}</p>
                 </Link>
             )}

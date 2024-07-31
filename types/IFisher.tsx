@@ -1,6 +1,7 @@
 export interface IFisher {
     _id: String,
     navn: string,
+    profilImgUrl: string,
     fiskeData: [
         {
             art: string,

@@ -3,6 +3,7 @@ import { FC } from "react";
 import { FaArrowRight, FaEye, FaFish } from "react-icons/fa";
 import { AchivementList } from "./achivements/AchivementList";
 import FiskMedals from "./fiskeantal/FiskMedals";
+import { Avatar } from "@/components/Avatar";
 
 export const ProfileCard = ({data}:any) => {
 
@@ -11,9 +12,12 @@ export const ProfileCard = ({data}:any) => {
     const profileUrl = `fiskerne/${data._id}`;
 
     return (
-        <div className="flex flex-col py-6 px-4 mt-2 rounded border gap-3 w-full lg:w-[500px] h-[350px]">
+        <div className="flex flex-col py-6 px-4 mt-2 rounded border gap-3 w-full lg:w-[500px] h-[375px]">
             <div className="flex flex-col">
-                <p className="text-xl lg:text-xl">{data.navn}</p>
+                <div className="flex gap-2 items-center mb-2">
+                    <Avatar profilImgUrl={data.profilImgUrl} />
+                    <p className="text-xl lg:text-xl">{data.navn}</p>
+                </div>
                 <div>
                     <p className="text-sm">Fisk fanget:</p>
                     <div className="flex gap-2 items-center">

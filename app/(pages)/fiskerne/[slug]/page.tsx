@@ -46,8 +46,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         </Link>
                     </div>
                     <div className="flex flex-col gap-5">
-                        <div className="ml-5">
-                            <p className="text-4xl font-bold text-center lg:text-left">{data.navn}</p>
+                        <div className="flex gap-8 items-center mt-4">
+                            {data.profilImgUrl && <img src={data.profilImgUrl} alt="profil billede" className="h-40 w-40 rounded-full object-cover" />}
+                            <p className="text-indigo-600 text-3xl">{data.navn}</p>
                         </div>
                         <div className="ml-5 mt-5">
                             <p className="text-xl">Achivements</p>
