@@ -21,9 +21,10 @@ interface CatchWithFisher {
 interface SenesteFangsterProps {
     initialData: CatchWithFisher[];
     allData: CatchWithFisher[];
+    sessionUserId: string;
 }
 
-const SenesteFangster: React.FC<SenesteFangsterProps> = ({ initialData, allData }) => {
+const SenesteFangster: React.FC<SenesteFangsterProps> = ({ initialData, allData, sessionUserId }) => {
     const [data, setData] = useState<CatchWithFisher[]>(initialData);
     const [loadedCount, setLoadedCount] = useState(5);
 
@@ -51,7 +52,7 @@ const SenesteFangster: React.FC<SenesteFangsterProps> = ({ initialData, allData 
         <div>
             {data.map((item: CatchWithFisher) => (
                 <div key={item.catch._id}>
-                    <SenesteFangstItem data={item} />
+                    <SenesteFangstItem data={item} sessionUserId={sessionUserId}/>
                 </div>
             ))}
         </div>

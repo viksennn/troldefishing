@@ -1,5 +1,7 @@
 import { PAGE_URL } from "@/app/url";
 import SenesteFangster from "./SenesteFangster";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 
 interface FiskeData {
     art: string;
@@ -52,13 +54,18 @@ async function fetchData() {
 }
 
 export default async function Home() {
+
+
+    const session = await getServerSession(authOptions);
+    const sessionUserId = session?.user?.id as string;
+
     const data = await fetchData();
 
     return (
         <div className="flex w-full justify-center">
-            <div className="w-2/5 mt-5">
+            <div className="lg:w-2/5 w-10/12 mt-5">
                 <p className="text-center font-bold text-xl">Seneste fangster</p>
-                <SenesteFangster initialData={data.slice(0, 5)} allData={data} />
+                <SenesteFangster initialData={data.slice(0, 5)} allData={data} sessionUserId={sessionUserId}/>
             </div>
         </div>
     );
