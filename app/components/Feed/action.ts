@@ -35,7 +35,8 @@ const acceptedTypes = [
     "image/gif",
     "image/webp",
     "video/mp4",
-    "video/webm"
+    "video/webm",
+    "video/hvec"
 ]
 
 const maxFileSize = 1024 * 1024 * 5; // 5MB

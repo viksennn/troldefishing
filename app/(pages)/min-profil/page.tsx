@@ -33,12 +33,12 @@ export default async function Home() {
     return (
         <div className="mt-5">
             <div className="flex justify-between mx-10">
-                <div className="flex justify-between w-full gap-10 mr-5">
+                <div className="flex justify-between w-full gap-10">
                     <div>
                         <p className="text-4xl font-bold tracking-tight">Min Profil</p>
-                        <div className="flex gap-8 items-center mt-4">
-                            {data.profilImgUrl && <img src={data.profilImgUrl} alt="profil billede" className="h-40 w-40 rounded-full object-cover" />}
-                            <p className="text-indigo-600 text-3xl">{data.navn}</p>
+                        <div className="flex lg:gap-8 gap-4 items-center mt-4">
+                            {data.profilImgUrl && <img src={data.profilImgUrl} alt="profil billede" className="lg:h-40 lg:w-40 h-24 w-24 rounded-full object-cover" />}
+                            <p className="text-indigo-600 text-2xl lg:text-3xl">{data.navn}</p>
                         </div>
                     </div>
                     <ProfileSetting data={data} />

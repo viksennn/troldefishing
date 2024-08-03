@@ -60,7 +60,7 @@ export const PostItem = ({ data, userData, userId }: PostItemProps) => {
             {userId === data.userId && (
                 <Link className="flex gap-2 items-center" href={`${PAGE_URL}/min-profil`}>
                     <Avatar profilImgUrl={postUser?.profilImgUrl} />
-                    <p className="text-lg font-bold">{postUser?.navn}</p>
+                    <p className="text-lg font-bold">{postUser?.navn} <span className='font-light text-gray-800 text-sm'>(dig)</span></p>
                 </Link>
             )}
             {userId !== data.userId && (
