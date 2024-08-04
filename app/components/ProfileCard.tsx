@@ -15,7 +15,7 @@ export const ProfileCard = ({data}:any) => {
         <div className="flex flex-col py-6 px-4 mt-2 rounded border gap-3 w-full lg:w-[500px] h-[375px]">
             <div className="flex flex-col">
                 <div className="flex gap-2 items-center mb-2">
-                    <Avatar profilImgUrl={data.profilImgUrl} />
+                    <Avatar profilImgUrl={data.profilImgUrl} size={12}/>
                     <p className="text-xl lg:text-xl">{data.navn}</p>
                 </div>
                 <div>

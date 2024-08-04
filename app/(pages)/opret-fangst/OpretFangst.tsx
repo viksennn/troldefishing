@@ -44,6 +44,8 @@ export const OpretFangst = () => {
 
     const [statusMessage, setStatusMessage] = useState<string | undefined>(undefined);
 
+    const [fileIsUploading, setFileIsUploading] = useState<boolean>(false);
+
 
     const maxFileSize = 1024 * 1024 * 5; // 5MB
     
@@ -89,6 +91,7 @@ export const OpretFangst = () => {
         try {
 
             if (file) {
+                setFileIsUploading(true);
                 setStatusMessage("Uploader billede...");
                 const checksum  = await computeSHA256(file);
                 const signedUrlResult = await getSignedURL(file.type, file.size, checksum);
@@ -153,6 +156,7 @@ export const OpretFangst = () => {
             return;
         }
         setStatusMessage("Oprettet");
+        setFileIsUploading(false);
 
         setTimeout(() => {
             setStatusMessage(undefined);
@@ -323,7 +327,7 @@ export const OpretFangst = () => {
             </div>
             <div className="h-4 mt-3 flex w-full flex-col items-center justify-center">
                 <Button
-                    disabled={!fiskeart || !lokation || !agn || !date}
+                    disabled={!fiskeart || !lokation || !agn || !date || fileIsUploading}
                     type="submit"
                 >
                     Opret Fangst

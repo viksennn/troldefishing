@@ -37,29 +37,6 @@ const fishingStats = new mongoose.Schema({
 
 export const FishingModel = mongoose.models.FishingData || mongoose.model('FishingData', fishingStats);
 
-const postSchema = new mongoose.Schema({
-    content: {
-        type: String,
-        required: true,
-    },
-    userId: {
-        type: String,
-        required: true,
-        ref: 'FishingData'
-    },
-    kommentarer: {
-        type: Array,
-        ref: 'Comments'
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-
-}, { collection: 'Posts' });
-
-export const PostModel = mongoose.models.Posts || mongoose.model('Posts', postSchema);
-
 const commentSchema = new mongoose.Schema({
     content: {
         type: String,
@@ -70,12 +47,37 @@ const commentSchema = new mongoose.Schema({
         required: true,
         ref: 'FishingData'
     },
-    postId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Posts'
-    },
 }, { collection: 'Comments' });
+
+const postSchema = new mongoose.Schema({
+    content: {
+        type: String,
+        required: true,
+    },
+    userId: {
+        type: String,
+        required: true,
+        ref: 'FishingData'
+    },
+    comments: {
+        type: [commentSchema],
+        required: true,
+    },
+    likes: {
+        type: Array,
+        required: true,
+        ref: 'FishingData'
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+
+}, { collection: 'Posts' });
+
+export const PostModel = mongoose.models.Posts || mongoose.model('Posts', postSchema);
+
+
 
 const mediaSchema = new mongoose.Schema({
     type: {

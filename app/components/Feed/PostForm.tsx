@@ -163,7 +163,7 @@ export const PostForm = ({ userId }: any) => {
                         <div>
                             <div className="">
                                 <Label htmlFor="picture" className="p-1 flex items-center justify-center rounded-md hover:cursor-pointer"><FaFileImage size={35}/></Label>
-                                <Input id="picture" type="file" className="hidden" onChange={handleChange} accept="image/jpeg,image/jpg,image/png,image/webp,image/gif,video/mp4,video/webm,video/hvec" />
+                                <Input id="picture" type="file" className="hidden" onChange={handleChange} accept="image/jpeg,image/jpg,image/png,image/webp,image/gif,video/mp4,video/webm" />
                             </div>
                             <div>
                                 <p className="text-xs">max 5mb</p>

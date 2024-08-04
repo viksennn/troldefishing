@@ -35,8 +35,7 @@ const acceptedTypes = [
     "image/gif",
     "image/webp",
     "video/mp4",
-    "video/webm",
-    "video/hvec"
+    "video/webm"
 ]
 
 const maxFileSize = 1024 * 1024 * 5; // 5MB
@@ -113,6 +112,8 @@ export async function createPost({content, mediaId}: CreatePostArgs)  {
     const postItem = await new PostModel({
         content,
         userId: sessionUserId,
+        comments: [],
+        likes: [],
         image: mediaId ? mediaId : undefined,
         createdAt: new Date(),
     });
@@ -125,4 +126,120 @@ export async function createPost({content, mediaId}: CreatePostArgs)  {
 
     revalidatePath("/dashboard");
     redirect("/dashboard");
+}
+
+export async function likePost(postId: string) {
+    try {
+        const session = await getServerSession(authOptions);
+        const sessionUserId = session?.user.id as string;
+
+        if (!session) {
+            throw new Error("Not authenticated");
+        }
+
+        await connectMongo();
+
+        const postItem = await PostModel.findById(postId);
+
+        if (!postItem) {
+            return { failure: "InvalidPostId" };
+        }
+
+        const userLikeIndex = postItem.likes.findIndex((like: any) => like === sessionUserId);
+
+        if (userLikeIndex !== -1) {
+            // Unlike the post
+            postItem.likes.splice(userLikeIndex, 1);
+        } else {
+            // Like the post
+            postItem.likes.push(sessionUserId);
+        }
+
+        await postItem.save();
+
+        return { success: userLikeIndex !== -1 ? "Unliked" : "Liked" };
+    } catch (error) {
+        console.error("Error liking/unliking post:", error);
+        throw error; // Rethrow to be caught in handleLike
+    }
+}
+
+export async function createComment({ postId, content }: { postId: string; content: string; }, comment: string) {
+    try {
+        const session = await getServerSession(authOptions);
+        const sessionUserId = session?.user.id;
+
+        if (!session) {
+            throw new Error("Not authenticated");
+        }
+
+        await connectMongo();
+
+        const postItem = await PostModel.findById(postId);
+
+        if (!postItem) {
+            return { failure: "InvalidPostId" };
+        }
+
+        const commentItem = {
+            content,
+            userId: sessionUserId,
+            createdAt: new Date(),
+        };
+
+        // Ensure commentItem is a plain object
+        if (Object.getPrototypeOf(commentItem) !== Object.prototype) {
+            throw new Error("Comment item must be a plain object");
+        }
+
+        postItem.comments.push(commentItem);
+
+        await postItem.save();
+
+        return { success: "Comment created" };
+    } catch (error) {
+        console.error("Error creating comment:", error);
+        throw error;
+    }
+}
+
+
+
+
+export async function deleteComment (postId: string, commentId: string) {
+    try {
+        const session = await getServerSession(authOptions);
+        const sessionUserId = session?.user.id as string;
+
+        if (!session) {
+            throw new Error("Not authenticated");
+        }
+
+        await connectMongo();
+
+        const postItem = await PostModel.findById(postId);
+
+        if (!postItem) {
+            return { failure: "InvalidPostId" };
+        }
+
+        const commentIndex = postItem.comments.findIndex((comment: any) => comment._id === commentId);
+
+        if (commentIndex === -1) {
+            return { failure: "InvalidCommentId" };
+        }
+
+        if (postItem.comments[commentIndex].userId !== sessionUserId) {
+            return { failure: "Unauthorized" };
+        }
+
+        postItem.comments.splice(commentIndex, 1);
+
+        await postItem.save();
+
+        return { success: "Comment deleted" };
+    } catch (error) {
+        console.error("Error deleting comment:", error);
+        throw error;
+    }
 }
