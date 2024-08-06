@@ -9,13 +9,11 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 
 import crypto from "crypto";
 
-import mongoose from "mongoose";
 import { MediaModel, PostModel } from "@/app/data/mongoFishingModel";
 import { connectMongo } from "@/app/data/mongodb";
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { create } from "domain";
 
 const generateFilename = (byes = 32) => crypto.randomBytes(byes).toString("hex");
 
@@ -164,82 +162,79 @@ export async function likePost(postId: string) {
     }
 }
 
-export async function createComment({ postId, content }: { postId: string; content: string; }, comment: string) {
-    try {
-        const session = await getServerSession(authOptions);
-        const sessionUserId = session?.user.id;
+export async function createComment(postId: string, content: string) {
+    const session = await getServerSession(authOptions);
+    const sessionUserId = session?.user.id;
 
-        if (!session) {
-            throw new Error("Not authenticated");
-        }
-
-        await connectMongo();
-
-        const postItem = await PostModel.findById(postId);
-
-        if (!postItem) {
-            return { failure: "InvalidPostId" };
-        }
-
-        const commentItem = {
-            content,
-            userId: sessionUserId,
-            createdAt: new Date(),
-        };
-
-        // Ensure commentItem is a plain object
-        if (Object.getPrototypeOf(commentItem) !== Object.prototype) {
-            throw new Error("Comment item must be a plain object");
-        }
-
-        postItem.comments.push(commentItem);
-
-        await postItem.save();
-
-        return { success: "Comment created" };
-    } catch (error) {
-        console.error("Error creating comment:", error);
-        throw error;
+    if (!session) {
+        throw new Error("Not authenticated");
     }
+
+    await connectMongo();
+
+    const postItem = await PostModel.findById(postId);
+
+    if (!postItem) {
+        return { failure: "InvalidPostId" };
+    }
+
+    const commentItem = {
+        content,
+        userId: sessionUserId,
+        createdAt: new Date(),
+    };
+
+    // Ensure commentItem is a plain object
+    if (Object.getPrototypeOf(commentItem) !== Object.prototype) {
+        throw new Error("Comment item must be a plain object");
+    }
+
+    postItem.comments.push(commentItem);
+
+    await postItem.save();
+
+    revalidatePath("/dashboard");
+    redirect("/dashboard");
+
 }
 
+// Ensure this function works independently
+export async function deleteComment(postId: any, commentId: any) {
+    const session = await getServerSession(authOptions);
+    const sessionUserId = session?.user.id as string;
 
-
-
-export async function deleteComment (postId: string, commentId: string) {
-    try {
-        const session = await getServerSession(authOptions);
-        const sessionUserId = session?.user.id as string;
-
-        if (!session) {
-            throw new Error("Not authenticated");
-        }
-
-        await connectMongo();
-
-        const postItem = await PostModel.findById(postId);
-
-        if (!postItem) {
-            return { failure: "InvalidPostId" };
-        }
-
-        const commentIndex = postItem.comments.findIndex((comment: any) => comment._id === commentId);
-
-        if (commentIndex === -1) {
-            return { failure: "InvalidCommentId" };
-        }
-
-        if (postItem.comments[commentIndex].userId !== sessionUserId) {
-            return { failure: "Unauthorized" };
-        }
-
-        postItem.comments.splice(commentIndex, 1);
-
-        await postItem.save();
-
-        return { success: "Comment deleted" };
-    } catch (error) {
-        console.error("Error deleting comment:", error);
-        throw error;
+    if (!session) {
+        throw new Error("Not authenticated");
     }
+
+    await connectMongo();
+
+    const postItem = await PostModel.findById(postId);
+
+    if (!postItem) {
+        console.log(`Invalid post ID: ${postId}`);
+        return { failure: "InvalidPostId" };
+    }
+
+    const commentIndex = postItem.comments.findIndex((comment: any) => comment._id.toString() === commentId);
+
+    if (commentIndex === -1) {
+        console.log(`Invalid comment ID: ${commentId}`);
+        return { failure: "InvalidCommentId" };
+    }
+
+    if (postItem.comments[commentIndex].userId !== sessionUserId) {
+        console.log(`Unauthorized user: ${sessionUserId}`);
+        return { failure: "Unauthorized" };
+    }
+
+    postItem.comments.splice(commentIndex, 1);
+
+    await postItem.save();
+
+    console.log("Comment deleted");
+
+    revalidatePath("/dashboard");
+    return { success: "CommentDeleted" };
 }
+
