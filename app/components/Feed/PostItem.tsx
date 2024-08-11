@@ -24,24 +24,15 @@ import { AiOutlineLoading } from 'react-icons/ai';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { FaRegComment } from 'react-icons/fa6';
 import { FiSend } from "react-icons/fi";
+import { Skeleton } from '@/components/ui/skeleton';
 
-interface User {
-    _id: string;
-    navn: string;
-    profilImgUrl: string;
-}
 
 type PostItemProps = {
     data: any;
-    userData: User[];
-    userId: string;
+    sessionUserId: string;
 };
 
-export const PostItem = ({ data, userData, userId }: PostItemProps) => {
-    const postUser = userData.find((user: any) => user._id === data.userId);
-
-    // Create a map of user IDs to user objects
-    const userMap = new Map(userData.map((user: any) => [user._id, user]));
+export const PostItem = ({ data, sessionUserId }: PostItemProps) => {
 
     const formattedDate = new Date(data.createdAt).toLocaleDateString('da-DK', {
         day: '2-digit',
@@ -68,26 +59,11 @@ export const PostItem = ({ data, userData, userId }: PostItemProps) => {
 
     const [commentSectionOpen, setCommentSectionOpen] = useState(false);
 
+    const [commentLoading, setCommentLoading] = useState(false);
+
     const [comment, setComment] = useState('');
-
-    useEffect(() => {
-        if (!data.likes) {
-            console.error('data.likes is undefined');
-            setLiked(false);
-            return;
-        }
-        
-        if (!userId) {
-            console.error('userId is undefined');
-            setLiked(false);
-            return;
-        }
-        
-        const likedByUser = data.likes.includes(userId);
-        setLiked(likedByUser);
-    }, [data.likes, userId]);
-
     const handleLike = async () => {
+
         setLikeLoadingState(true);
     
         try {
@@ -99,9 +75,9 @@ export const PostItem = ({ data, userData, userId }: PostItemProps) => {
         } catch (error) {
             console.error("Failed to like/unlike post:", error);
         } finally {
+            router.refresh();
             setLikeLoadingState(false);
         }
-
     };
 
     const handleCommentClick = () => {
@@ -113,6 +89,9 @@ export const PostItem = ({ data, userData, userId }: PostItemProps) => {
     }
 
     const handleCommentDelete = async (commentId:any) => {
+
+        setCommentLoading(true);
+
         console.log(`Attempting to delete comment with ID: ${commentId}`);
         try {
             const response = await deleteComment(data._id, commentId);
@@ -135,10 +114,14 @@ export const PostItem = ({ data, userData, userId }: PostItemProps) => {
         } catch (error) {
             console.error("Failed to delete comment:", error);
         }
+
+        setCommentLoading(false);
     };
     
 
     const handleComment = async (e: React.ChangeEvent<HTMLFormElement>) => {
+
+        setCommentLoading(true);
         e.preventDefault();
         if (!comment) {
             toast({
@@ -155,44 +138,47 @@ export const PostItem = ({ data, userData, userId }: PostItemProps) => {
         } catch (error) {
             console.error("Failed to create comment:", error);
         }
+        router.refresh();
+        setCommentLoading(false);
     };
 
-    const latestCommentUser = userMap.get(data.comments[data.comments.length - 1]?.userId);
+    const user = data.userId;
+    
+    const latestComment = data.comments[data.comments.length - 1];
     
     return (
         <div className="w-full border rounded-lg py-4 px-6 my-4">
-            {userId === data.userId && (
+            {sessionUserId === data.userId._id && (
                 <Link className="flex gap-2 items-center" href={`${PAGE_URL}/min-profil`}>
-                    <Avatar profilImgUrl={postUser?.profilImgUrl} size={10}/>
-                    <p className="text-lg font-bold">{postUser?.navn} <span className='font-light text-gray-800 text-sm'>(dig)</span></p>
+                    <Avatar profilImgUrl={user?.profilImgUrl} size={10}/>
+                    <p className="text-lg font-bold">{user?.navn} <span className='font-light text-gray-800 text-sm'>(dig)</span></p>
                 </Link>
             )}
-            {userId !== data.userId && (
-                <Link className="flex gap-2 items-center" href={`${PAGE_URL}/fiskerne/${data.userId}`}>
-                    <Avatar profilImgUrl={postUser?.profilImgUrl} size={10}/>
-                    <p className="text-lg">{postUser?.navn}</p>
+            {sessionUserId !== data.userId._id && (
+                <Link className="flex gap-2 items-center" href={`${PAGE_URL}/fiskerne/${data.userId._id}`}>
+                    <Avatar profilImgUrl={user?.profilImgUrl} size={10}/>
+                    <p className="text-lg">{user?.navn}</p>
                 </Link>
             )}
             <div className="p-6">
                 <div>{formatContent(data.content)}</div>
             </div>
-            {data.media && data.media.length > 0 && data.media.map((media: any) => (
-                <div key={media._id} className="w-full flex justify-center">
-                    {media.type.startsWith('image') ? (
+                <div key={data.image._id} className="w-full flex justify-center">
+                    {data.image.type === "image" && (
                         <img 
-                            src={media.url} 
+                            src={data.image.url} 
                             alt="Post media" 
                             className="w-4/5 rounded-lg h-auto"
                         />
-                    ) : (
-                        <video src={media.url} controls className='w-full rounded-lg h-auto'/>
+                    )}
+                    {data.image.type === "video" && (
+                           <video src={data.image.url} controls className='w-full rounded-lg h-auto'/>
                     )}
                 </div>
-            ))}
             <div className='mt-4'>
                 {commentSectionOpen && (
                     <>
-                        {commentSection({data, handleComment, handleCommentChange, userMap, handleCommentDelete, comment, userId})}
+                        {commentSection({data, handleComment, handleCommentChange, handleCommentDelete, comment, sessionUserId, commentLoading})}
                     </>
                 )}
 
@@ -201,8 +187,9 @@ export const PostItem = ({ data, userData, userId }: PostItemProps) => {
                         
                         <div className='border p-2 rounded-md'>
                             <div className='flex gap-2 items-center'>
-                                <Avatar profilImgUrl={latestCommentUser?.profilImgUrl} size={8}/>
-                                <p>{data.comments[data.comments.length - 1].content}</p>
+                                <Avatar profilImgUrl={latestComment.userId.profilImgUrl} size={8}/>
+                                <p>{latestComment.userId.navn}</p>
+                                <p>{latestComment.content}</p>
                             </div>
                         </div>
                     )}
@@ -226,7 +213,7 @@ export const PostItem = ({ data, userData, userId }: PostItemProps) => {
                                         {likeLoadingState && <p><AiOutlineLoading className='animate-spin' /></p>}
                                         {!likeLoadingState && (
                                             <>
-                                                {likeButton({handleLike, liked})}
+                                                {likeButton({handleLike, liked, data, sessionUserId})}
                                                 <p className='tracking-tight'>
                                                     {data.likes.length} {data.likes.length === 1 ? 'like' : 'likes'}
                                                 </p>
@@ -235,15 +222,14 @@ export const PostItem = ({ data, userData, userId }: PostItemProps) => {
                                     </TooltipTrigger>
                                     <TooltipContent>
                                         <div className='flex flex-col gap-2'>
-                                            {data.likes?.map((likeId: string) => {
-                                                const user = userMap.get(likeId);
+                                            {data.likes?.map((likeUser: any) => {
                                                 return user ? (
-                                                    <div key={likeId} className='flex items-center gap-2 p-1 rounded-sm'>
-                                                        <Avatar profilImgUrl={user.profilImgUrl} size={8}/>
-                                                        {userId === likeId ? (
-                                                            <p className='text-sm'>{user.navn} (dig)</p>
-                                                        ) : user ? (
-                                                            <p className='text-sm'>{user.navn}</p>
+                                                    <div key={likeUser._id} className='flex items-center gap-2 p-1 rounded-sm'>
+                                                        <Avatar profilImgUrl={likeUser.profilImgUrl} size={8}/>
+                                                        {sessionUserId === likeUser._id ? (
+                                                            <p className='text-sm'>{likeUser.navn} (dig)</p>
+                                                        ) : likeUser ? (
+                                                            <p className='text-sm'>{likeUser.navn}</p>
                                                         ) : (
                                                             <p className='text-sm'>Unknown user</p>
                                                         )}
@@ -255,7 +241,7 @@ export const PostItem = ({ data, userData, userId }: PostItemProps) => {
                                 </Tooltip>
                             </TooltipProvider>
                         </div>
-                        {alertDialog({handleDelete, data, sessionUser: userId})}
+                        {alertDialog({handleDelete, data, sessionUser: sessionUserId})}
                     </div>
                 </div>
             </div>
@@ -263,15 +249,22 @@ export const PostItem = ({ data, userData, userId }: PostItemProps) => {
     );
 };
 
-const likeButton = ({ handleLike, liked }: any) => (
-    <div className='hover:bg-blue-200 flex items-center justify-center p-1 rounded'>
-        {liked ? (
-            <MdFavorite size={25} onClick={handleLike} className='text-red-500'/>
-        ) : (
-            <MdFavoriteBorder size={25} onClick={handleLike} />
-        )}
-    </div>
-);
+const likeButton = ({ data, handleLike, sessionUserId }: any) => {
+
+    const likedByUser = data.likes.some((like: any) => like._id === sessionUserId);
+
+    return (
+        <div className='hover:bg-blue-200 flex items-center justify-center p-1 rounded'>
+            {likedByUser ? (
+                <MdFavorite size={25} className='text-red-500' onClick={handleLike}/>
+            ) : (
+                <MdFavoriteBorder size={25} onClick={handleLike} />
+            )}
+        </div>
+    );
+};
+
+
 
 const commentIcon = ({ data, handleCommentClick }: any) => (
     <div className='flex gap-2 items-center'>
@@ -282,7 +275,7 @@ const commentIcon = ({ data, handleCommentClick }: any) => (
     </div>
 )
 
-const commentSection = ({ data, handleComment, handleCommentChange, userMap, handleCommentDelete, comment, userId }: any) => {
+const commentSection = ({ data, handleComment, handleCommentChange, handleCommentDelete, comment, sessionUserId, commentLoading }: any) => {
     return (
         <div className='flex flex-col gap-2'>
             <form className='w-full flex items-center' onSubmit={handleComment}>
@@ -300,17 +293,21 @@ const commentSection = ({ data, handleComment, handleCommentChange, userMap, han
             {data.comments.length === 0 && (
                 <p className='text-gray-600 text-sm'>Ingen kommentarer endnu</p>
             )}
+            {commentLoading && (
+                <div className='flex items-center gap-2'>
+                    <Skeleton className='w-full h-14 p-2' />
+                </div>
+            )}
             {data.comments.length > 0 && (
                 <div className='flex flex-col-reverse gap-2'>
                     {data.comments.map((comment: any) => {
-                        const commentUser = userMap.get(comment.userId);
                         return (
-                            <div key={comment._id} className='flex justify-between p-2 border rounded-md'>
+                            <div key={comment._id} className='flex justify-between p-2 border rounded-md h-14'>
                                 <div className='flex gap-2 items-center'>
-                                    <Avatar profilImgUrl={commentUser?.profilImgUrl} size={8} />
-                                    <p className='flex gap-4'><span className='text-gray-800 font-bold'>{commentUser?.navn}</span>{comment.content}</p>
+                                    <Avatar profilImgUrl={comment.userId.profilImgUrl} size={8} />
+                                    <p className='flex gap-4'><span className='text-gray-800 font-bold'>{comment?.userId.navn}</span>{comment.content}</p>
                                 </div>
-                                {commentUser?._id === userId && (
+                                {comment.userId._id === sessionUserId && (
                                     <button type='button' onClick={() => handleCommentDelete(comment._id)} className='text-red-500'>Slet</button>
                                 )}
                             </div>
@@ -332,7 +329,7 @@ type AlertDialogProps = {
 const alertDialog = ({ handleDelete, sessionUser, data }: AlertDialogProps) => {
     return (
         <>
-            {data.userId === sessionUser && (
+            {data.userId._id === sessionUser && (
                 <AlertDialog>
                     <AlertDialogTrigger>
                         <MdDelete size={20}/>

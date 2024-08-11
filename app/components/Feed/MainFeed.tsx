@@ -11,17 +11,13 @@ export const MainFeed = async () => {
 
     const flippedData = postData.reverse();
 
-    const userUrl = `${PAGE_URL}/api/fisk`;
-    const userRes = await fetch(userUrl, { cache: "no-store" });
-    const userData = await userRes.json();
-
     const sessionUser = await getServerSession(authOptions);
     const userId = sessionUser?.user?.id as string;
 
     return (
         <div className="flex flex-col gap-8 lg:gap-2">
             <PostForm userId={userId} />
-            <PostFeed postData={flippedData} userData={userData} userId={userId}/>
+            <PostFeed postData={flippedData} userId={userId}/>
         </div>
     );
 };

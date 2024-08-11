@@ -2,27 +2,17 @@ import { connectMongo } from "@/app/data/mongodb";
 import { MediaModel, PostModel } from "@/app/data/mongoFishingModel";
 import { NextResponse } from "next/server";
 
-export async function GET() {
-    try {
-        await connectMongo();
-        
-        const posts = await PostModel.find().lean();
-        
-        const postsWithMedia = await Promise.all(posts.map(async post => {
-            try {
-                const media = await MediaModel.find({ refId: post._id }).lean();
-                return { ...post, media };
-            } catch (error) {
-                console.error(`Error fetching media for post ${post._id}:`, error);
-                return { ...post, media: [] };
-            }
-        }));
-        
-        return NextResponse.json(postsWithMedia);
-    } catch (error) {
-        console.error("Error fetching posts with media:", error);
-        return NextResponse.json({ error: "Failed to fetch posts with media" }, { status: 500 });
-    }
+export async function GET(req:any) {
+    await connectMongo();
+    
+    const posts = await PostModel.find()
+    .populate('userId', 'navn profilImgUrl')
+    .populate('likes', 'navn profilImgUrl')
+    .populate('comments.userId', 'navn profilImgUrl')
+    .populate('image', 'url type')
+
+    return NextResponse.json(posts, { status: 200 });
+
 }
 
 export async function POST(req:any) {

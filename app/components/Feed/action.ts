@@ -143,7 +143,7 @@ export async function likePost(postId: string) {
             return { failure: "InvalidPostId" };
         }
 
-        const userLikeIndex = postItem.likes.findIndex((like: any) => like === sessionUserId);
+        const userLikeIndex = postItem.likes.findIndex((like: string) => like === sessionUserId);
 
         if (userLikeIndex !== -1) {
             // Unlike the post
@@ -192,9 +192,6 @@ export async function createComment(postId: string, content: string) {
     postItem.comments.push(commentItem);
 
     await postItem.save();
-
-    revalidatePath("/dashboard");
-    redirect("/dashboard");
 
 }
 

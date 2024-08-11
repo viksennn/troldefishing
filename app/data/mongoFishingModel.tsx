@@ -68,6 +68,10 @@ const postSchema = new mongoose.Schema({
         required: true,
         ref: 'FishingData'
     },
+    image: {
+        type: String,
+        ref: 'Media'
+    },
     createdAt: {
         type: Date,
         default: Date.now,
@@ -76,8 +80,6 @@ const postSchema = new mongoose.Schema({
 }, { collection: 'Posts' });
 
 export const PostModel = mongoose.models.Posts || mongoose.model('Posts', postSchema);
-
-
 
 const mediaSchema = new mongoose.Schema({
     type: {
