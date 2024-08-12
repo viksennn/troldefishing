@@ -88,6 +88,7 @@ export const PostItem = ({ data, sessionUserId }: PostItemProps) => {
         setComment(value);
     }
 
+
     const handleCommentDelete = async (commentId:any) => {
 
         setCommentLoading(true);
@@ -145,6 +146,7 @@ export const PostItem = ({ data, sessionUserId }: PostItemProps) => {
     const user = data.userId;
     
     const latestComment = data.comments[data.comments.length - 1];
+
     
     return (
         <div className="w-full border rounded-lg py-4 px-6 my-4">
@@ -163,16 +165,16 @@ export const PostItem = ({ data, sessionUserId }: PostItemProps) => {
             <div className="p-6">
                 <div>{formatContent(data.content)}</div>
             </div>
-                <div key={data.image._id} className="w-full flex justify-center">
-                    {data.image.type === "image" && (
+                <div className="w-full flex justify-center">
+                    {data.image && data.image.type === "image" && (
                         <img 
                             src={data.image.url} 
                             alt="Post media" 
                             className="w-4/5 rounded-lg h-auto"
                         />
                     )}
-                    {data.image.type === "video" && (
-                           <video src={data.image.url} controls className='w-full rounded-lg h-auto'/>
+                    {data.image && data.image.type === "video" && (
+                        <video src={data.image.url} controls className='w-full rounded-lg h-auto'/>
                     )}
                 </div>
             <div className='mt-4'>
