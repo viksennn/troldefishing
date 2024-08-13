@@ -89,41 +89,46 @@ type CreatePostArgs = {
 }
 
 export async function createPost({content, mediaId}: CreatePostArgs)  {
+    try {
+        const session = await getServerSession(authOptions);
+        const sessionUserId = session?.user.id as string;
 
-    const session = await getServerSession(authOptions);
-    const sessionUserId = session?.user.id as string;
-
-    if (!session) {
-        throw new Error("Not authenticated");
-    }
-
-    if (mediaId) {
-        const mediaItem = await MediaModel.findById(mediaId);
-
-        if (!mediaItem) {
-            return { failure: "Invalid media ID" };
+        if (!session) {
+            throw new Error("Not authenticated");
         }
+
+        await connectMongo();
+
+        if (mediaId) {
+            const mediaItem = await MediaModel.findById(mediaId);
+
+            if (!mediaItem) {
+                return { failure: "Invalid media ID" };
+            }
+        }
+
+        const postItem = new PostModel({
+            content,
+            userId: sessionUserId,
+            comments: [],
+            likes: [],
+            image: mediaId ? mediaId : undefined,
+            createdAt: new Date(),
+        });
+
+        await postItem.save();
+
+        if (mediaId) {
+            await MediaModel.findByIdAndUpdate(mediaId, { refId: postItem._id });
+        }
+
+        revalidatePath("/dashboard");
+
+        return redirect("/dashboard");
+    } catch (error) {
+        console.error("Error creating post:", error);
+        throw new Error("Failed to create post");
     }
-
-    await connectMongo();
-
-    const postItem = await new PostModel({
-        content,
-        userId: sessionUserId,
-        comments: [],
-        likes: [],
-        image: mediaId ? mediaId : undefined,
-        createdAt: new Date(),
-    });
-
-    await postItem.save();
-
-    if (mediaId) {
-        await MediaModel.findByIdAndUpdate(mediaId, { refId: postItem._id });
-    }
-
-    revalidatePath("/dashboard");
-    redirect("/dashboard");
 }
 
 export async function likePost(postId: string) {
