@@ -34,6 +34,8 @@ export const PostForm = ({ userId }: any) => {
         return hashHex;
       };
 
+    const router = useRouter();
+
     const maxFileSize = 1024 * 1024 * 5; // 5MB
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -93,6 +95,7 @@ export const PostForm = ({ userId }: any) => {
         setFile(undefined);
         setFileUrl(undefined);
 
+        router.refresh();
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

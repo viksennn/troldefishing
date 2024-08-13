@@ -99,13 +99,6 @@ export async function createPost({content, mediaId}: CreatePostArgs)  {
 
         await connectMongo();
 
-        if (mediaId) {
-            const mediaItem = await MediaModel.findById(mediaId);
-
-            if (!mediaItem) {
-                return { failure: "Invalid media ID" };
-            }
-        }
 
         const postItem = new PostModel({
             content,
@@ -118,13 +111,6 @@ export async function createPost({content, mediaId}: CreatePostArgs)  {
 
         await postItem.save();
 
-        if (mediaId) {
-            await MediaModel.findByIdAndUpdate(mediaId, { refId: postItem._id });
-        }
-
-        revalidatePath("/dashboard");
-
-        return redirect("/dashboard");
     } catch (error) {
         console.error("Error creating post:", error);
         throw new Error("Failed to create post");
