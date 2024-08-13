@@ -78,9 +78,11 @@ type CreatePostArgs = {
     content: string;
     mediaId?: string;
     sessionUserId: string;
+    imageUrl?: string;
+    imageType?: string;
 }
 
-export async function createPost({content, mediaId}: CreatePostArgs)  {
+export async function createPost({content, imageUrl, imageType}: CreatePostArgs)  {
     try {
         const session = await getServerSession(authOptions);
         const sessionUserId = session?.user.id as string;
@@ -89,15 +91,34 @@ export async function createPost({content, mediaId}: CreatePostArgs)  {
             throw new Error("Not authenticated");
         }
 
-        await connectMongo();
+        if(!imageUrl || !imageType) {
 
+            await connectMongo();
+
+            const postItem = new PostModel({
+                content,
+                userId: sessionUserId,
+                comments: [],
+                likes: [],
+                createdAt: new Date(),
+            });
+
+            await postItem.save();
+
+            return;
+        }
+
+        await connectMongo();
 
         const postItem = new PostModel({
             content,
             userId: sessionUserId,
             comments: [],
             likes: [],
-            image: mediaId ? mediaId : undefined,
+            image: {
+                type: imageType,
+                url: imageUrl
+            },
             createdAt: new Date(),
         });
 

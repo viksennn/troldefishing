@@ -49,6 +49,17 @@ const commentSchema = new mongoose.Schema({
     },
 }, { collection: 'Comments' });
 
+const imageItem = new mongoose.Schema({
+    type: {
+        type: String,
+        required: true,
+    },
+    url: {
+        type: String,
+        required: true,
+    },
+})
+
 const postSchema = new mongoose.Schema({
     content: {
         type: String,
@@ -69,8 +80,8 @@ const postSchema = new mongoose.Schema({
         ref: 'FishingData'
     },
     image: {
-        type: String,
-        ref: 'Media'
+        type: imageItem,
+        required: false,
     },
     createdAt: {
         type: Date,

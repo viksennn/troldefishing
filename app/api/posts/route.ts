@@ -9,7 +9,6 @@ export async function GET(req:any) {
     .populate('userId', 'navn profilImgUrl')
     .populate('likes', 'navn profilImgUrl')
     .populate('comments.userId', 'navn profilImgUrl')
-    .populate('image', 'url type')
 
     return NextResponse.json(posts, { status: 200 });
 

@@ -41,17 +41,31 @@ export const PostItem = ({ data, sessionUserId }: PostItemProps) => {
     });
 
     const handleDelete = async () => {
-        const postId = data._id;
         try {
-            await deletePost(postId);
-            toast({
-                title: "Post slettet",
-                description: "Din post er blevet slettet",
-            });
+            const result = await deletePost(data);
+            if (result.success) {
+                toast({
+                    title: "Post slettet",
+                    description: "Din post er blevet slettet",
+                });
+                router.refresh();
+            } else {
+                toast({
+                    title: "Fejl",
+                    description: result.error || "Noget gik galt.",
+                    variant: "destructive",
+                });
+            }
         } catch (error) {
             console.error("Failed to delete post:", error);
+            toast({
+                title: "Fejl",
+                description: "Kunne ikke slette posten.",
+                variant: "destructive",
+            });
         }
     };
+    
 
     const [liked, setLiked] = useState(false);
     const [likeLoadingState, setLikeLoadingState] = useState(false);

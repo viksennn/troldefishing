@@ -39,17 +39,19 @@ export const PostForm = ({ userId }: any) => {
     const maxFileSize = 1024 * 1024 * 5; // 5MB
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-
         e.preventDefault();
-
         setStatusMessage("Indlæser...");
-
+    
         try {
-            let mediaId: string | undefined = undefined;
+            let s3imageUrl: string | undefined = undefined;
+            let s3ImageType: string | undefined = undefined;
+    
             if (file) {
                 setStatusMessage("Uploader billede...");
-                const checksum  = await computeSHA256(file);
+    
+                const checksum = await computeSHA256(file);
                 const signedUrlResult = await getSignedURL(file.type, file.size, checksum);
+    
                 if (signedUrlResult.failure !== undefined) {
                     if (signedUrlResult.failure === "Invalid file type") {
                         setStatusMessage("Forkert filtype");
@@ -60,15 +62,12 @@ export const PostForm = ({ userId }: any) => {
                         return;
                     } else {
                         setStatusMessage("Fejl");
+                        throw new Error(signedUrlResult.failure);
                     }
-                    console.error(signedUrlResult.failure);
-                    throw(new Error(signedUrlResult.failure));
                 }
-        
-                const {url} = signedUrlResult.success;
-
-                console.log(url, mediaId);
-        
+    
+                const { url } = signedUrlResult.success;
+    
                 await fetch(url, {
                     method: "PUT",
                     body: file,
@@ -76,26 +75,33 @@ export const PostForm = ({ userId }: any) => {
                         "Content-Type": file?.type
                     }
                 });
+    
+                s3imageUrl = url.split("?")[0]; // Fjern query-parametre
+                s3ImageType = file.type.split("/")[0]; // Gem billedtypen, f.eks. "image"
             }
-
-            await createPost({ content, mediaId, sessionUserId: userId });
-
+    
+            // Opret posten med eller uden billed-URL og type
+            await createPost({
+                content,
+                imageUrl: s3imageUrl, // undefined hvis der ikke er noget billede
+                imageType: s3ImageType, // undefined hvis der ikke er noget billede
+                sessionUserId: userId
+            });
+    
+            setStatusMessage("Oprettet");
+    
         } catch (error) {
+            console.error("Error in handleSubmit:", error);
             setStatusMessage("Fejl");
-            return;
+        } finally {
+            setTimeout(() => setStatusMessage(undefined), 2000);
+            setContent("");
+            setFile(undefined);
+            setFileUrl(undefined);
+            router.refresh();
         }
-        setStatusMessage("Oprettet");
-
-        setTimeout(() => {
-            setStatusMessage(undefined);
-        }, 2000);
-
-        setContent("");
-        setFile(undefined);
-        setFileUrl(undefined);
-
-        router.refresh();
     };
+     
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
