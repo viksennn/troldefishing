@@ -66,7 +66,6 @@ export const PostForm = ({ userId }: any) => {
                 }
         
                 const {url} = signedUrlResult.success;
-                mediaId = signedUrlResult.success.mediaId;
 
                 console.log(url, mediaId);
         

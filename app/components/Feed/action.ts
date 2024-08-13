@@ -70,15 +70,7 @@ export async function getSignedURL(type: string, size: number, checksum: string)
         expiresIn: 60 
     });
 
-    const mediaResult = await new MediaModel({
-        type: type.startsWith("image") ? "image" : "video",
-        url: signedUrl.split("?")[0],
-        userId: sessionUserId
-    });
-
-    await mediaResult.save();
-
-    return { success: { url: signedUrl, mediaId: mediaResult._id } };
+    return { success: { url: signedUrl } };
     
 }
 
