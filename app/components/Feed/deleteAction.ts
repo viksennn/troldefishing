@@ -4,9 +4,6 @@ import { MediaModel, PostModel } from "@/app/data/mongoFishingModel";
 import { authOptions } from "@/lib/authOptions";
 import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getServerSession } from "next-auth";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-
 
 const s3 = new S3Client({
     region: process.env.AWS_BUCKET_REGION!,
@@ -18,7 +15,7 @@ const s3 = new S3Client({
 
 
 export async function deletePost(data: any) {
-    const postId = data._id;  // Opdateret for at bruge det korrekte felt for postId
+    const postId = data._id;  
     const image = data.image?.url;
 
     console.log("deletePost");
@@ -35,7 +32,7 @@ export async function deletePost(data: any) {
         return { error: "Post ikke fundet." };
     }
 
-    // Sørg for at sammenligne bruger-ID korrekt
+
     if (post.userId.toString() !== session.user.id) {
         return { error: "Du kan kun slette din egen post" };
     }
@@ -46,10 +43,9 @@ export async function deletePost(data: any) {
     }
     
 
-    // S3 delete
     const deleteObjectCommand = new DeleteObjectCommand({
         Bucket: process.env.AWS_BUCKET_NAME!,
-        Key: image.split("/").pop(), // Fjern [0], da image allerede er en string
+        Key: image.split("/").pop(), 
     });
 
     try {
