@@ -40,6 +40,9 @@ export const FishTypeCard = ({art, className}: any) => {
         case "Comber":
             fishImg = "/ach/comber.png";
             break;
+        case "Stør":
+            fishImg = "/ach/stør.png";
+            break;
         default:
             fishImg = "/ach/defaultfisk.png"
             break;

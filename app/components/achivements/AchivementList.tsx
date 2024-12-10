@@ -77,6 +77,7 @@ export const AchivementList = (achdata: { data: any, variant: string }) => {
     const [fangetHornfisk, setFangetHornfisk] = useState<boolean>(false);
     const [fangetMakrel, setFangetMakrel] = useState<boolean>(false);
     const [fangetSkalle, setFangetSkalle] = useState<boolean>(false);
+    const [fangetStør, setFangetStør] = useState<boolean>(false);
 
     const [fanget2Skaller, setFanget2Skaller] = useState<boolean>(false);
     const [fanget5Skaller, setFanget5Skaller] = useState<boolean>(false);
@@ -220,6 +221,11 @@ export const AchivementList = (achdata: { data: any, variant: string }) => {
         const isAborreFanget = fiskeData.some((fiskeData: any) => fiskeData.art === "Aborre");
         if (isAborreFanget) {
             setFangetAborre(true);
+        }
+
+        const isStørFanget = fiskeData.some((fiskeData: any) => fiskeData.art === "Stør");
+        if (isStørFanget) {
+            setFangetStør(true);
         }
 
         //ACH: Fanget en Hornfisk
@@ -427,6 +433,11 @@ export const AchivementList = (achdata: { data: any, variant: string }) => {
             label: "Fanget de 3 arter fra en vild sø", title: "Vild Sø", src: "/ach/vildsoe.png",
             variant: achdata.variant,
             border: "master"
+        }),
+        fangetStør && generateTooltip({
+            label: "Fanget sin første Stør", title: "", src: "/ach/stør.png",
+            variant: achdata.variant,
+            border: ""
         }),
         fanget75RegnbueØrreder && generateTooltip({
             label: "Fanget 75 Regnbue Ørreder", title: "Regnbue Ørred God", src: "/ach/rbørred_god.png",

@@ -12,7 +12,8 @@ export const fiskeArterData = [
     "Rødspætte",
     "Brasen",
     "Comber",
-    "Large-eye dentex"
+    "Large-eye dentex",
+    "Stør",
 ]
 
 export const fiskeLokationerData = [
@@ -25,6 +26,7 @@ export const fiskeLokationerData = [
     "Fårup",
     "Limfjorden",
     "Bovbjerg",
+    "Donslund",
 ]
 
 export const fiskeAgnData = [
@@ -35,4 +37,5 @@ export const fiskeAgnData = [
     "Majs",
     "Powerbait",
     "Krog",
+    "Ronnie rig"
 ]
