@@ -3,7 +3,7 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { FaPen, FaTrash } from "react-icons/fa";
+import { FaImage, FaPen, FaTrash } from "react-icons/fa";
 import { TbFishBone } from "react-icons/tb";
 import { PAGE_URL } from "../url";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -108,27 +108,26 @@ const FormSchema = z.object({
             <div className="flex items-center justify-center mr-5">
                 <FishTypeCard art={data.art} className={"h-36 object-contain"}/>
             </div>
-            <div className="flex justify-between w-full">
+            <div className="flex flex-col justify-start w-full">
                 <div className="">
-                    <p className="text-lg lg:text-base"><span className="text-gray-500">Type: </span>{data.art}</p>
-                    <p className="text-lg lg:text-base"><span className="text-gray-500">Lokation: </span>{data.lokation}</p>
-                    <p className="text-lg lg:text-base"><span className="text-gray-500">Fanget med: </span>{data.agn}</p>
-                    <p className="text-lg lg:text-base"><span className="text-gray-500">Dato: </span>{formatDato}</p>
+                    <p className="text-base lg:text-base"><span className="text-gray-500">Type: </span>{data.art}</p>
+                    <p className="text-base lg:text-base"><span className="text-gray-500">Lokation: </span>{data.lokation}</p>
+                    <p className="text-base lg:text-base"><span className="text-gray-500">Fanget med: </span>{data.agn}</p>
+                    <p className="text-base lg:text-base"><span className="text-gray-500">Dato: </span>{formatDato}</p>
 
-                    {data.imgUrl ? (<FiskeBillede img={imgUrl} trigger={<p className="text-sm p-1">Se billede</p>} />) : <p className="text-gray-700 text-base lg:text-sm mt-1.5 font-bold">Intet billede</p>}
-                    
-                </div>
-                <div className="flex flex-col lg:justify-end gap-10 items-center mt-8 lg:mt-2 lg:gap-2">
-                    <Popover>
-                        <PopoverTrigger><TbFishBone className="w-8 h-8 lg:w-6 lg:h-6" /></PopoverTrigger>
-                        <PopoverContent className="flex flex-col justify-center items-center gap-3">
-                            <p className="text-sm">Sikker på du vil slette {data.art}?</p>
-                            <div className="flex gap-2 items-center">
-                                <p className="text-sm font-bold">Ja tak </p>
-                                <button className="p-1 rounded bg-red-600 text-white text-sm" onClick={(handleDeleteClick)}><FaTrash /></button>
-                            </div>
-                        </PopoverContent>
-                    </Popover>
+                    <div className="flex items-center justify-between mt-2 flex-row-reverse">
+                        {data.imgUrl ? (<FiskeBillede img={imgUrl} trigger={<p className="text-xl p-1"><FaImage /></p>} />) : <p className="text-gray-700 text-base lg:text-sm mt-1.5 font-bold">Intet billede</p>}
+                        <Popover>
+                            <PopoverTrigger><TbFishBone className="w-8 h-8 lg:w-6 lg:h-6" /></PopoverTrigger>
+                            <PopoverContent className="flex flex-col justify-center items-center gap-3">
+                                <p className="text-sm">Sikker på du vil slette {data.art}?</p>
+                                <div className="flex gap-2 items-center">
+                                    <p className="text-sm font-bold">Ja tak </p>
+                                    <button className="p-1 rounded bg-red-600 text-white text-sm" onClick={(handleDeleteClick)}><FaTrash /></button>
+                                </div>
+                            </PopoverContent>
+                        </Popover>
+                    </div>
                 </div>
             </div>
         </div>

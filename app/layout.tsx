@@ -9,6 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Trolde Fishing",
   description: "Lavet af Viksen.",
+  manifest: "/manifest.ts",
 };
 
 export default function RootLayout({
