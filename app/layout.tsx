@@ -3,13 +3,14 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from "./Providers";
+import { m } from "framer-motion";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Trolde Fishing",
   description: "Lavet af Viksen.",
-  manifest: "/manifest.ts",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
