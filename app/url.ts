@@ -1,1 +1,1 @@
-export const PAGE_URL = "https://troldefishing.vercel.app:3000";
+export const PAGE_URL = "https://troldefishing.vercel.app";
