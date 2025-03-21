@@ -215,7 +215,7 @@ export const PostItem = ({ data, sessionUserId }: PostItemProps) => {
             </div>
             <div className='flex justify-between items-center mt-2'>
                 <div>
-                    <p className='text-sm text-gray-600'>{formattedDate}</p>
+                    <p className='text-xs text-gray-600'>{formattedDate}</p>
                 </div>
                 <div className='flex gap-2'>
                     <div className='flex gap-4 items-center'>                       
@@ -230,7 +230,7 @@ export const PostItem = ({ data, sessionUserId }: PostItemProps) => {
                                         {!likeLoadingState && (
                                             <>
                                                 {likeButton({handleLike, liked, data, sessionUserId})}
-                                                <p className='tracking-tight'>
+                                                <p className='tracking-tight text-sm'>
                                                     {data.likes.length} {data.likes.length === 1 ? 'like' : 'likes'}
                                                 </p>
                                             </>
@@ -287,7 +287,7 @@ const commentIcon = ({ data, handleCommentClick }: any) => (
         <div className='hover:bg-blue-200 flex items-center justify-center p-1 rounded'>
             <FaRegComment size={25} onClick={handleCommentClick}/>
         </div>
-        <p>{data.comments?.length} kommentarer</p>
+        <p className='text-sm'>{data.comments?.length} kommentarer</p>
     </div>
 )
 
