@@ -391,9 +391,6 @@ export const AchivementList = (achdata: { data: any, variant: string }) => {
 
         // ACH: Fanget fem FORSKELLIGE arter, så ikke den samme men fem forskellige:
 
-
-
-
         const isNogetEksotiskFanget = fiskeData.some((fisk: any) => 
             fisk.art !== "Regnbue Ørred" &&
             fisk.art !== "Bækørred" &&
@@ -403,7 +400,8 @@ export const AchivementList = (achdata: { data: any, variant: string }) => {
             fisk.art !== "Hornfisk" &&
             fisk.art !== "Makrel" &&
             fisk.art !== "Rødspætte" &&
-            fisk.art !== "Skrubbe"
+            fisk.art !== "Skrubbe" &&
+            fisk.art !== "Stør"
         );
         
         if (isNogetEksotiskFanget) {

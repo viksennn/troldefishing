@@ -148,6 +148,20 @@ export const OpretFangst = () => {
             
                 await createFangst({ art: fiskeart, lokation: lokation, agn: agn, dato: date, imgUrl: s3fileUrl});
             }
+
+        if (!file) {
+
+            if (!date) {
+                toast({
+                    variant: "destructive",
+                    title: "Fejl ved upload af fangst",
+                    description: "Vælg en dato",
+                })
+                setStatusMessage("Vælg en dato");
+                return;
+            }
+            await createFangst({ art: fiskeart, lokation: lokation, agn: agn, dato: date, imgUrl: undefined});
+        }
             
 
 
