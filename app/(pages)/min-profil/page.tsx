@@ -28,7 +28,15 @@ export default async function Home() {
     const fishermanData = await getFishermanData(userId);
     const data = fishermanData.fisk;
 
-    const antalFisk = data.fiskeData.length;
+    if (!data) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-2xl">Ingen data fundet for denne bruger.</p>
+            </div>
+        );
+    }
+
+    const antalFisk = data?.fiskeData.length;
 
     return (
         <div className="mt-5">
@@ -37,7 +45,7 @@ export default async function Home() {
                     <div>
                         <p className="text-4xl font-bold tracking-tight">Min Profil</p>
                         <div className="flex lg:gap-8 gap-4 items-center mt-4">
-                            {data.profilImgUrl && <img src={data.profilImgUrl} alt="profil billede" className="lg:h-40 lg:w-40 h-24 w-24 rounded-full object-cover" />}
+                            {data.fisk.profilImgUrl && <img src={data.profilImgUrl} alt="profil billede" className="lg:h-40 lg:w-40 h-24 w-24 rounded-full object-cover" />}
                             <p className="text-indigo-600 text-2xl lg:text-3xl">{data.navn}</p>
                         </div>
                     </div>

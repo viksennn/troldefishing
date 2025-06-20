@@ -9,6 +9,8 @@ export const ProfileCard = ({data}:any) => {
 
     const antalFisk = data.fiskeData.length;
 
+    console.log(data);
+
     const profileUrl = `fiskerne/${data._id}`;
 
     return (

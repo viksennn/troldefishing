@@ -28,7 +28,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
     const fishermanData = await getFishermanData(id);
 
-    const data: IFisher = fishermanData.fisk;
+    const data = fishermanData.fisk;
 
     if (data === null) {
         return (

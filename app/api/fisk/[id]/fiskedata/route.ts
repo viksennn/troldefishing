@@ -1,4 +1,4 @@
-import { FishingModel } from "@/app/data/mongoFishingModel";
+import { FangstModel, FishingModel } from "@/app/data/mongoFishingModel";
 import { connectMongo } from "@/app/data/mongodb";
 import { NextResponse } from "next/server";
 
@@ -11,15 +11,11 @@ export async function GET(req: any, { params }: any) {
 
   await connectMongo();
 
-  const user = await FishingModel.findOne({ _id: id }).select("fiskeData");
-
-  if (!user) {
-    return NextResponse.json({ data: [], hasMore: false });
-  }
+  const userFangster = await FangstModel.find({ userId: id })
   
-  const sorted = [...user.fiskeData].sort((a, b) => {
+  const sorted = userFangster.sort((a, b) => {
     return new Date(b.dato).getTime() - new Date(a.dato).getTime();
-  });
+  })
 
   const sliced = sorted.slice(skip, skip + limit);
 

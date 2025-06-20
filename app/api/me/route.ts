@@ -2,9 +2,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { connectMongo } from '@/app/data/mongodb';
-import { FishingModel } from '@/app/data/mongoFishingModel';
+import { FangstModel, FishingModel } from '@/app/data/mongoFishingModel';
+import { generateGoals } from '@/lib/generateGoals';
 
 export async function GET(req: NextRequest) {
+
+  const { searchParams } = new URL(req.url);
+  const auth = searchParams.get('auth') || 'false';
+
   try {
     const authHeader = req.headers.get('authorization');
     if (!authHeader) {
@@ -16,13 +21,29 @@ export async function GET(req: NextRequest) {
     const userId = decoded.userId;
 
     await connectMongo();
+
+    if (auth === 'true') {
+      const user = await FishingModel.findById(userId).select('_id');
+      return NextResponse.json(user);
+    }
+
     const user = await FishingModel.findById(userId).select('-password');
 
     if (!user) {
       return NextResponse.json({ error: 'Bruger ikke fundet' }, { status: 404 });
     }
 
-    return NextResponse.json(user);
+    const fangster = await FangstModel.find({ userId }).sort({ dato: -1 }).lean();
+
+    const goals = generateGoals(fangster);
+
+    const userWithFangster = {
+      ...user.toObject(),
+      fiskeData: fangster,
+      goals: goals,
+    };
+
+    return NextResponse.json(userWithFangster);
   } catch (err) {
     return NextResponse.json({ error: 'Token ugyldig eller fejl opstod' }, { status: 403 });
   }

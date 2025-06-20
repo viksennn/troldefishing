@@ -1,20 +1,24 @@
 import mongoose from "mongoose";
 
-const fishingStatsDataNew = new mongoose.Schema({
+const fangstSchema = new mongoose.Schema({
     art: String,
     lokation: String,
     agn: String,
-    dato: String,
-    imgUrl: {
-        type: String,
-        default: null,
-        required: true,
-    },
+    dato: Date,
+    imgUrl: String,
+    imgKey: String,
     createdAt: {
-        type: Date,
-        default: Date.now,
+      type: Date,
+      default: Date.now,
     },
-});
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "FishingData",
+      required: true,
+    },
+  }, { collection: 'Fangster' });
+
+  export const FangstModel = mongoose.models.Fangster || mongoose.model('Fangster', fangstSchema);
 
 const fishingStats = new mongoose.Schema({
     navn: {
@@ -23,10 +27,6 @@ const fishingStats = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
-    },
-    fiskeData: {
-        type: [fishingStatsDataNew],
         required: true,
     },
     profilImgUrl: {

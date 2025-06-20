@@ -1,15 +1,33 @@
 import { connectMongo } from "@/app/data/mongodb";
 import { NextResponse } from "next/server";
-import { FishingModel } from "@/app/data/mongoFishingModel";
+import { FishingModel, FangstModel } from "@/app/data/mongoFishingModel";
 import uniqid from 'uniqid';
 import { UTApi } from "uploadthing/server";
+import { generateGoals } from "@/lib/generateGoals";
 
-export async function GET(req:any, {params}:any) {
+export async function GET(req: any, { params }: any) {
     const { id } = params;
+  
     await connectMongo();
-    const fisk = await FishingModel.findOne({_id: id});
-    return NextResponse.json({fisk});
-}
+  
+    const user = await FishingModel.findById(id).lean();
+  
+    if (!user) {
+      return NextResponse.json({ error: "Bruger ikke fundet" }, { status: 404 });
+    }
+    
+    const fangster = await FangstModel.find({ userId: id }).sort({ dato: -1 }).lean();
+
+    const goals = generateGoals(fangster);
+  
+    const userWithFangster = {
+        ...user,
+        fiskeData: fangster,
+        goals: goals,
+    };
+  
+    return NextResponse.json(userWithFangster);
+  }
 
 export async function PUT(req:any, {params}:any ) {
     const {id} = params;

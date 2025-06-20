@@ -22,6 +22,8 @@ export const ProfileCardList = async () => {
         return b.fiskeData.length - a.fiskeData.length;
     });
 
+    console.log(fiskeData)
+
     return (
         <div className="flex flex-col lg:flex-row gap-5 flex-wrap">
             <div>

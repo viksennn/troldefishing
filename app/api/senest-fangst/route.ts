@@ -1,45 +1,20 @@
-import { FishingModel } from "@/app/data/mongoFishingModel";
 import { connectMongo } from "@/app/data/mongodb";
+import { FangstModel } from "@/app/data/mongoFishingModel";
 import { NextResponse } from "next/server";
 
-interface FiskeData {
-    art: string;
-    lokation: string;
-    agn: string;
-    dato: string;
-    imgUrl?: string;
-    imgKey?: string;
-    _id: string;
-}
+export async function GET(req: any) {
+  await connectMongo();
 
-interface CatchWithFisher {
-catch: FiskeData;
-    fisherman: string;
-    id: string;
-}
+  const { searchParams } = new URL(req.url);
+  const antal = searchParams.get("antal") || "10";
 
-export async function GET(req: any, params: any) {
+  const fangster = await FangstModel.find()
+    .populate('userId', 'navn')
+    .lean();
 
-    //params for number of display
+  const sorteretFangster = fangster
+    .sort((a, b) => new Date(b.dato).getTime() - new Date(a.dato).getTime())
+    .slice(0, Number(antal));
 
-    const { searchParams } = new URL(req.url);
-    const antal = searchParams.get('antal') || 10 as number;
-
-
-    await connectMongo();
-    const fisk = await FishingModel.find();
-    
-    if (fisk.length > 0) {
-        const allCatches: CatchWithFisher[] = fisk.flatMap((person: any) => 
-          person.fiskeData.map((fiskeData: any) => ({
-            catch: fiskeData,
-            fisherman: person.navn,
-            id: person._id
-          }))
-        );
-
-        const latest = allCatches.sort((a, b) => new Date(b.catch.dato).getTime() - new Date(a.catch.dato).getTime());
-
-        return NextResponse.json(latest.slice(0, Number(antal)));
-    }
+  return NextResponse.json(sorteretFangster);
 }

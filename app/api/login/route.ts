@@ -35,7 +35,9 @@ export async function POST(req: any) {
             { expiresIn: "7d" }
           );
 
-        return NextResponse.json({token});
+        const userId = user._id.toString();
+
+        return NextResponse.json({token, userId});
 
     } catch (error) {
        
